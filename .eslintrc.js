@@ -23,6 +23,7 @@ module.exports = {
     "vue/html-self-closing": 0,
     "vue/component-tags-order": 0,
     "vue/no-v-html": 0,
+    "vue/no-deprecated-destroyed-lifecycle": 0,
   },
   "plugins": ["jest"]
 };

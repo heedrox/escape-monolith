@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <Welcome v-if="state === 'WELCOME'" @start="doPlay()" />
-    <!--Game v-if="state === 'GAME'"></Game-->
+    <Game v-if="state === 'GAME'"></Game>
   </div>
 </template>
 
 <script>
 import Welcome from './components/welcome/Welcome.vue'
-//import Game from './components/game/Game';
+import Game from './components/game/Game';
 import './assets/common/normalize.css'
 import './assets/common/common.css'
 
@@ -20,7 +20,7 @@ export default {
   name: 'App',
   components: {
     Welcome,
-    //Game
+    Game
   },
   data() {
     return {
@@ -43,6 +43,10 @@ export default {
 @font-face {
   font-family: 'SpaceJunk';
   src: url('./assets/common/spacejunkXL.ttf')  format('truetype')
+}
+@font-face {
+  font-family: 'Digital7';
+  src: url('./assets/common/digital-7.ttf')  format('truetype')
 }
 #app {
   font-family: 'SpaceAge', Avenir, Helvetica, Arial, sans-serif;
