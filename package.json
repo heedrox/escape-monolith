@@ -1,0 +1,55 @@
+{
+  "name": "escape-museo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test": "jest",
+    "tdd": "jest --watch"
+  },
+  "dependencies": {
+    "core-js": "^3.6.4",
+    "firebase": "^7.14.6",
+    "simple-keyboard": "^2.29.36",
+    "vue": "^2.6.11",
+    "vuefire": "^2.2.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.3.0",
+    "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-service": "~4.3.0",
+    "@vue/test-utils": "^1.0.3",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.0.1",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-vue": "^7.0.0-alpha.4",
+    "jest": "^26.0.1",
+    "vue-jest": "^3.0.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
