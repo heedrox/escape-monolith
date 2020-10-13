@@ -4,7 +4,7 @@ const aCorruptedItem = (id, roomId, image, destinataries, type = '') =>
   ({ id, roomId, image, destinataries, type, corrupted: true });
 
 export default {
-  defaultActiveRoom: 5,
+  defaultActiveRoom: 2,
   players: {
     '481516': 1,
     'SAVETCSTW': 2,

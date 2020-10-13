@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="gameState.ready" class="all-items">
+    <div v-if="gameState && gameState.ready" class="all-items">
       <div class="items-container">
         <RoomItem v-for="item in itemsInRoom"
                   :key="item.id"
@@ -11,10 +11,15 @@
         />
       </div>
     </div>
-    <div v-if="!gameState.ready" class="waiting">
+    <div v-if="!gameState || !gameState.ready" class="waiting">
       <p>Humanos,</p>
       <p><br /><br /></p>
       <p>Demostradnos lo que valéis</p>
+      <p>
+        <button v-if="isAdmin()" @click="createGamecode()">
+          RESET CODIGO
+        </button>
+      </p>
     </div>
     <SelectedItem v-if="selectedItem"
                   :item="selectedItem"
@@ -54,9 +59,9 @@
 <script>
 import SelectedItem from './SelectedItem';
 import RoomItem from './RoomItem';
-import { db } from '../../../config/db';
 import { isAdmin } from '../../../lib/is-admin';
 import { isCorruptedForMe } from '../../../lib/is-corrupted-destinatary';
+import firebaseUtil from '../../../lib/firebase-util';
 
 export default {
   name: 'Room',
@@ -85,7 +90,7 @@ export default {
     }
   },
   firestore: {
-    gameState: db.doc('/game-states/code-nod/'),
+    gameState: firebaseUtil.doc('/')
   },
   computed: {
     itemsInRoom() {
@@ -93,6 +98,9 @@ export default {
     }
   },
   methods: {
+    isAdmin() {
+      return isAdmin();
+    },
     adminToggleLock(itemId) {
       if (this.isUnlocked(itemId)) {
         this.gameState.unlockedItems.splice(this.gameState.unlockedItems.indexOf(itemId), 1);
@@ -115,6 +123,11 @@ export default {
     },
     isUnlocked(itemId) {
       return this.gameState.unlockedItems.indexOf(itemId) >= 0;
+    },
+    createGamecode() {
+      if (window.confirm('Esto reseteará todo el juego. ¿Seguro?')) {
+        this.$firestoreRefs.gameState.set({ ready: true, unlockedItems: [], unlockedRooms: [2]});
+      }
     }
   }
 }

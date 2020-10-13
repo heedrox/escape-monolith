@@ -32,6 +32,9 @@ import { db } from '../../../config/db';
 const asCounterWithPadding = (number, padding) => number < 10 ? (padding + number) : (number + '')
 import { addHours, diffMinutes, diffSeconds } from '../../../lib/dates'
 import {isAdmin} from '../../../lib/is-admin';
+import { getGameCode } from '../../../lib/get-game-code';
+
+const FIREBASE_URL = `/game-states/${getGameCode()}/`;
 
 export default {
   name: 'Counter',
@@ -42,7 +45,7 @@ export default {
     }
   },
   firestore: {
-    gameState: db.doc('/game-states/code-nod/'),
+    gameState: db.doc(FIREBASE_URL),
   },
   computed: {
     endTime: function() {
@@ -79,7 +82,7 @@ export default {
     pressStart() {
       if (window.confirm('Quieres restartear el timer?')) {
         this.now = new Date();
-        db.doc('/game-states/code-nod/').update({endTime: addHours(1, this.now)});
+        db.doc(FIREBASE_URL).update({endTime: addHours(1, this.now)});
       }
     }
   }

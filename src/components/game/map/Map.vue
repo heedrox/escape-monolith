@@ -69,14 +69,14 @@
 </template>
 <script>
 import { isAdmin } from '../../../lib/is-admin';
-import { db } from '../../../config/db';
+import firebaseUtil from '../../../lib/firebase-util';
 
 export default {
   name: 'Map',
   props: {
     activeRoom: {
       type: Number,
-      default: 5,
+      default: 2,
     }
   },
   emits: ['change-room'],
@@ -88,7 +88,7 @@ export default {
     };
   },
   firestore: {
-    mapState: db.doc('/game-states/code-nod/'),
+    mapState: firebaseUtil.doc('/'),
   },
   methods: {
     isAdmin() {
@@ -126,6 +126,7 @@ export default {
       };
     },
     isUnlocked(room) {
+      if (this.mapState === null) return false;
       return this.mapState.unlockedRooms.indexOf(room) >= 0;
     }
   }
