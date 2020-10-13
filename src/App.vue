@@ -48,6 +48,10 @@ export default {
   font-family: 'Digital7';
   src: url('./assets/common/digital-7.ttf')  format('truetype')
 }
+@font-face {
+  font-family: 'MarasEye';
+  src: url('./assets/common/maras-eye.ttf')  format('truetype')
+}
 #app {
   font-family: 'SpaceAge', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -8,7 +8,7 @@
 <style scoped>
   p {
     padding-top: 10vh;
-    font-size: 3em;
+    font-size: 5em;
     color: white;
   }
 
