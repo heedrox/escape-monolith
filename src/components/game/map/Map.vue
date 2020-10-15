@@ -177,7 +177,7 @@ export default {
   }
 
   .room.active {
-    border: solid 1vh rgb(212, 1, 47);
+    border: solid 1vh rgb(13, 6, 182);
   }
 
   .separator {

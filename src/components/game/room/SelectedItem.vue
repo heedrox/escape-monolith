@@ -10,9 +10,9 @@
       <span class="helper"></span>
       <img ref="magnificationElement" :alt="item.image" :src="url" />
       <span
-          ref="glass"
-          class="magnifying-glass"
-          :style="glassStyle"
+        ref="glass"
+        class="magnifying-glass"
+        :style="glassStyle"
       />
     </div>
   </div>
@@ -24,7 +24,7 @@
     left: 90vw;
     height: 5vh;
     width: 5vh;
-    background-color: rgb(212, 1, 47);
+    background-color: rgb(13, 6, 182);
     color:#fff;
     border-radius: 50%;
     display: inline-block;
@@ -48,7 +48,7 @@
     background:black;
     white-space: nowrap; /* This is required unless you put the helper span closely near the img */
     text-align: center;
-    border-color: rgb(212, 1, 47);
+    border-color: rgb(13, 6, 182);
     border-width: 2vh;
   }
 
@@ -65,7 +65,7 @@
   }
   .magnifying-glass {
     position: fixed;
-    border: solid 1vh #a593a7;
+    border: solid 1vh #bec3ff;
     border-radius: 50%;
     cursor: none;
     width: 250px;
@@ -101,6 +101,7 @@ export default {
       default: null
     }
   },
+  emits: ['hide'],
   data() {
     return {
       img: null,
