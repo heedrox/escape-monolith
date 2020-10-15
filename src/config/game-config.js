@@ -5,6 +5,7 @@ const aCorruptedItem = (id, roomId, image, destinataries, type = '') =>
 
 export default {
   defaultActiveRoom: 2,
+  availableRooms: [2,4,5,6,7,8,9],
   players: {
     '481516': 1,
     'SAVETCSTW': 2,
@@ -32,13 +33,11 @@ export default {
     anItem(104, 1, 'safe-box-in-1.jpg'),
     aCorruptedItem(105, 1, 'elmo-1.jpg', [1, 2]),
 
-    anItem(203, 2, 'library.jpg'),
-    anItem(201, 2, 'book-catalog.jpg'),
-    anItem(207, 2, 'box-elmo.jpg'),
-    anItem(205, 2, 'door-to-egypt.jpg'),
-    anItem(204, 2, 'lock-to-3.jpg'),
-    anItem(202, 2, 'book-disney.jpg'),
-    aCorruptedItem(210, 2, 'elmo-3.jpg', [1, 2]),
+    anItem(201, 2, 'pared-de-tres-letras.jpg'),
+    anItem(202, 2, 'pared-botones.jpg'),
+    anItem(203, 2, 'pared-con-pista.jpg'),
+    anItem(204, 2, 'pared-explicacion-planeta.jpg'),
+    anItem(205, 2, 'letras.jpg'),
 
     anItem(301, 3, 'pasillo.jpg'),
     anItem(311, 3, 'pergamino-pasillo.jpg'),

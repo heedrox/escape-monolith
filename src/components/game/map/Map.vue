@@ -2,13 +2,15 @@
   <div class="room-container">
     <div v-if="isAdmin()" class="adminBox">
       Unlock room:
-      <a href="#" :class="adminGetClassFor(1)" @click.prevent="adminUnlock(1)">1</a>
-      <a href="#" :class="adminGetClassFor(2)" @click.prevent="adminUnlock(2)">2</a>
-      <a href="#" :class="adminGetClassFor(3)" @click.prevent="adminUnlock(3)">3</a>
-      <a href="#" :class="adminGetClassFor(4)" @click.prevent="adminUnlock(4)">4</a>
-      <a href="#" :class="adminGetClassFor(5)" @click.prevent="adminUnlock(5)">5</a>
-      <a href="#" :class="adminGetClassFor(6)" @click.prevent="adminUnlock(6)">6</a>
-      <a href="#" :class="adminGetClassFor(7)" @click.prevent="adminUnlock(7)">7</a>
+      <a v-if="existsRoom(1)" href="#" :class="adminGetClassFor(1)" @click.prevent="adminUnlock(1)">1</a>
+      <a v-if="existsRoom(2)" href="#" :class="adminGetClassFor(2)" @click.prevent="adminUnlock(2)">2</a>
+      <a v-if="existsRoom(3)" href="#" :class="adminGetClassFor(3)" @click.prevent="adminUnlock(3)">3</a>
+      <a v-if="existsRoom(4)" href="#" :class="adminGetClassFor(4)" @click.prevent="adminUnlock(4)">4</a>
+      <a v-if="existsRoom(5)" href="#" :class="adminGetClassFor(5)" @click.prevent="adminUnlock(5)">5</a>
+      <a v-if="existsRoom(6)" href="#" :class="adminGetClassFor(6)" @click.prevent="adminUnlock(6)">6</a>
+      <a v-if="existsRoom(7)" href="#" :class="adminGetClassFor(7)" @click.prevent="adminUnlock(7)">7</a>
+      <a v-if="existsRoom(8)" href="#" :class="adminGetClassFor(8)" @click.prevent="adminUnlock(8)">8</a>
+      <a v-if="existsRoom(9)" href="#" :class="adminGetClassFor(9)" @click.prevent="adminUnlock(9)">9</a>
     </div>
     <div class="separator"></div>
     <div class="separator"></div>
@@ -70,6 +72,7 @@
 <script>
 import { isAdmin } from '../../../lib/is-admin';
 import firebaseUtil from '../../../lib/firebase-util';
+import config from '../../../config/game-config';
 
 export default {
   name: 'Map',
@@ -84,7 +87,7 @@ export default {
     return {
       mapState: {
         unlockedRooms: [],
-      }
+      },
     };
   },
   firestore: {
@@ -128,6 +131,9 @@ export default {
     isUnlocked(room) {
       if (this.mapState === null) return false;
       return this.mapState.unlockedRooms.indexOf(room) >= 0;
+    },
+    existsRoom(room) {
+      return config.availableRooms.indexOf(room) >= 0;
     }
   }
 }
