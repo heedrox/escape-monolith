@@ -46,10 +46,10 @@
 
 </style>
 <script>
-import SelectedVideoItem from './SelectedVideoItem';
-import SelectedPdfItem from './SelectedPdfItem';
-import SelectedPianoItem from './SelectedPianoItem';
-import SelectedImageItem from './SelectedImageItem';
+import SelectedVideoItem from './items/SelectedVideoItem';
+import SelectedPdfItem from './items/SelectedPdfItem';
+import SelectedPianoItem from './items/SelectedPianoItem';
+import SelectedImageItem from './items/SelectedImageItem';
 
 export default {
   name: 'SelectedItem',
