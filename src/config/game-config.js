@@ -38,6 +38,7 @@ export default {
     anItem(203, 2, 'pared-con-pista.jpg'),
     anItem(204, 2, 'pared-explicacion-planeta.jpg'),
     anItem(205, 2, 'letras.jpg'),
+    anItem(206, 2, 'teclado-normal.jpg'),
 
     anItem(301, 3, 'pasillo.jpg'),
     anItem(311, 3, 'pergamino-pasillo.jpg'),
