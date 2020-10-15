@@ -31,19 +31,6 @@
     width:100vw;
     background: rgba(165,147,167,0.5);
   }
-  .zoomed-item {
-    position: fixed;
-    top: 10vh;
-    left: 10vw;
-    height:80vh;
-    width:80vw;
-    background:black;
-    white-space: nowrap; /* This is required unless you put the helper span closely near the img */
-    text-align: center;
-    border-color: rgb(13, 6, 182);
-    border-width: 2vh;
-  }
-
 </style>
 <script>
 import SelectedVideoItem from './items/SelectedVideoItem';
