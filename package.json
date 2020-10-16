@@ -12,6 +12,8 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "firebase": "^7.14.6",
+    "glitch-canvas": "^1.1.8",
+    "html2canvas": "^1.0.0-rc.7",
     "simple-keyboard": "^2.29.36",
     "vue": "^2.6.11",
     "vuefire": "^2.2.2"

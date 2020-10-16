@@ -8,7 +8,7 @@
       @input="onInputChange"
     >
     <div class="keyboard">
-      <SimpleKeyboard :input="input" @onChange="onChange" @onKeyPress="onKeyPress" />
+      <SimpleKeyboard :input="input" @on-change="onChange" @on-key-press="onKeyPress" />
     </div>
   </div>
 </template>

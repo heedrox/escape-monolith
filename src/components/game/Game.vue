@@ -1,5 +1,6 @@
 <template>
   <div>
+    <GameActions></GameActions>
     <Counter class="left-top box"></Counter>
     <Map class="left-middle box" :active-room="activeRoom" @changeRoom="changeRoom($event)"></Map>
     <CodeBreaker class="left-bottom box" :game-config="gameConfig"></CodeBreaker>
@@ -46,10 +47,13 @@ import Room from './room/Room';
 import GAME_CONFIG from '../../config/game-config.js';
 import CodeBreaker from './code-breaker/CodeBreaker';
 import Counter from './counter/Counter';
+import GameActions from './game-actions/GameActions';
+import { isAdmin } from '../../lib/is-admin';
 
 export default {
   name: 'Game',
   components: {
+    GameActions,
     Counter,
     CodeBreaker,
     Map,
@@ -64,6 +68,9 @@ export default {
   methods: {
     changeRoom(room) {
       this.activeRoom = room;
+    },
+    isAdmin() {
+      return isAdmin();
     }
   }
 }

@@ -17,6 +17,7 @@ export default {
       default: '',
     }
   },
+  emits: ['on-change', 'on-key-press'],
   data: () => ({
     keyboard: null
   }),
@@ -41,10 +42,10 @@ export default {
   },
   methods: {
     onChange(input) {
-      this.$emit("onChange", input);
+      this.$emit("on-change", input);
     },
     onKeyPress(button) {
-      this.$emit("onKeyPress", button);
+      this.$emit("on-key-press", button);
       /**
        * If you want to handle the shift and caps lock buttons
        */

@@ -2,10 +2,11 @@ const anItem = (id, roomId, image, type = '') =>
   ({ id, roomId, image, type, corrupted: false });
 const aCorruptedItem = (id, roomId, image, destinataries, type = '') =>
   ({ id, roomId, image, destinataries, type, corrupted: true });
+const byNumberDestinataries = (ifTwo, ifThree) => ({ ifTwo, ifThree });
 
 export default {
   defaultActiveRoom: 2,
-  availableRooms: [2,4,5,6,7,8,9],
+  availableRooms: [2, 4, 5, 6, 7, 8, 9],
   players: {
     '481516': 1,
     'SAVETCSTW': 2,
@@ -28,18 +29,13 @@ export default {
     // 'OEMECWE',
   ],
   items: [
-    anItem(101, 1, 'movie-tv.mp4', 'VIDEO'),
-    aCorruptedItem(102, 1, 'cuadro-leopoldo-archiduque-pinturas.jpg', [1, 3]),
-    anItem(104, 1, 'safe-box-in-1.jpg'),
-    aCorruptedItem(105, 1, 'elmo-1.jpg', [1, 2]),
-
     anItem(201, 2, 'pared-de-tres-letras.jpg'),
     anItem(202, 2, 'pared-botones.jpg'),
     anItem(203, 2, 'pared-con-pista.jpg'),
     anItem(204, 2, 'pared-explicacion-planeta.jpg'),
     anItem(205, 2, 'letras.jpg'),
     anItem(206, 2, 'teclado-normal.jpg'),
-    aCorruptedItem(207, 2, 'letras.jpg', [1, 3]),
+    aCorruptedItem(207, 2, 'letras.jpg', byNumberDestinataries([1], [1, 2])),
 
     anItem(301, 3, 'pasillo.jpg'),
     anItem(311, 3, 'pergamino-pasillo.jpg'),
