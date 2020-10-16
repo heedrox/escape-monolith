@@ -97,6 +97,11 @@ export default {
       return this.gameConfig.items.filter(item => (item.roomId === this.activeRoom));
     }
   },
+  watch: {
+    gameState() {
+      this.closeImageIfOpen();
+    },
+  },
   methods: {
     isAdmin() {
       return isAdmin();
@@ -128,7 +133,14 @@ export default {
       if (window.confirm('Esto reseteará todo el juego. ¿Seguro?')) {
         this.$firestoreRefs.gameState.set({ ready: true, unlockedItems: [], unlockedRooms: [2]});
       }
+    },
+    closeImageIfOpen() {
+      if (!this.gameState) return;
+      if (!this.selectedItem) return;
+      if (this.gameState.unlockedItems.indexOf(this.selectedItem.id) === -1) {
+        this.selectedItem = null;
+      }
     }
-  }
+  },
 }
 </script>

@@ -43,7 +43,7 @@ import { isAdmin } from '../../../lib/is-admin';
 import { isCorruptedForMe } from '../../../lib/is-corrupted-destinatary';
 
 export default {
-  name: 'Room',
+  name: 'RoomItem',
   props: {
     item: {
       type: Object,
