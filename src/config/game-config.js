@@ -39,6 +39,7 @@ export default {
     anItem(204, 2, 'pared-explicacion-planeta.jpg'),
     anItem(205, 2, 'letras.jpg'),
     anItem(206, 2, 'teclado-normal.jpg'),
+    aCorruptedItem(207, 2, 'letras.jpg', [1, 3]),
 
     anItem(301, 3, 'pasillo.jpg'),
     anItem(311, 3, 'pergamino-pasillo.jpg'),
