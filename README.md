@@ -26,3 +26,8 @@ npm run lint
 ### URL formato
 
 https://domain/GAMECODE/numberplayers/usercode
+
+## Copyright
+
+Some images are made by: http://www.textures4photoshop.com/
+Image from: https://www.freepng.es/png-j4ki2j/download.html. ONLY FOR PERSONAL USE. Do not distribute it!

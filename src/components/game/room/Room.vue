@@ -60,7 +60,7 @@
 import SelectedItem from './SelectedItem';
 import RoomItem from './RoomItem';
 import { isAdmin } from '../../../lib/is-admin';
-import { isCorruptedForMe } from '../../../lib/is-corrupted-destinatary';
+import { isVisibleForMe } from '../../../lib/is-visible-destinatary';
 import firebaseUtil from '../../../lib/firebase-util';
 
 export default {
@@ -115,8 +115,13 @@ export default {
       this.$firestoreRefs.gameState.update( { unlockedItems: this.gameState.unlockedItems });
     },
     getUrl(item) {
-      if (item.corrupted && !isAdmin() && isCorruptedForMe(item.destinataries)) {
+      if (item.corrupted && !isAdmin() && isVisibleForMe(item.destinataries)) {
         return `${this.publicPath}game/common/corrupted-image.jpg`;
+      }
+      if (item.different) {
+        return isVisibleForMe(item.destinataries) ?
+          `${this.publicPath}game/${item.roomId}/${item.imageA}` :
+          `${this.publicPath}game/${item.roomId}/${item.imageB}`;
       }
       return `${this.publicPath}game/${item.roomId}/${item.image}`
     },

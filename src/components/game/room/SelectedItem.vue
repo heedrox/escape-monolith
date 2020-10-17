@@ -4,6 +4,7 @@
       X
     </div>
     <SelectedVideoItem v-if="item.type === 'VIDEO'" :src="url" />
+    <SelectedAudioItem v-else-if="item.type === 'MP3'" :src="url" />
     <SelectedPdfItem v-else-if="item.type === 'PDF'" :src="url" />
     <SelectedPianoItem v-else-if="item.type === 'PIANO'" :alt="item.image" :src="url" />
     <SelectedImageItem v-else :url="url" :item="item" />
@@ -37,6 +38,7 @@ import SelectedVideoItem from './items/SelectedVideoItem';
 import SelectedPdfItem from './items/SelectedPdfItem';
 import SelectedPianoItem from './items/SelectedPianoItem';
 import SelectedImageItem from './items/SelectedImageItem';
+import SelectedAudioItem from './items/SelectedAudioItem';
 
 export default {
   name: 'SelectedItem',
@@ -44,6 +46,7 @@ export default {
     SelectedPianoItem,
     SelectedPdfItem,
     SelectedVideoItem,
+    SelectedAudioItem,
     SelectedImageItem,
   },
   props: {

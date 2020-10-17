@@ -40,7 +40,7 @@
 </style>
 <script>
 import { isAdmin } from '../../../lib/is-admin';
-import { isCorruptedForMe } from '../../../lib/is-corrupted-destinatary';
+import { isVisibleForMe } from '../../../lib/is-visible-destinatary';
 
 export default {
   name: 'RoomItem',
@@ -74,11 +74,18 @@ export default {
       this.$emit('toggle-lock', item);
     },
     getUrl(item) {
-      if (item.corrupted && !isAdmin() && isCorruptedForMe(item.destinataries)) {
+      if (item.corrupted && !isAdmin() && isVisibleForMe(item.destinataries)) {
         return `${this.publicPath}game/common/corrupted-image.jpg`;
       }
+      if (item.different) {
+        return isVisibleForMe(item.destinataries) ?
+          `${this.publicPath}game/${item.roomId}/${item.imageA}` :
+          `${this.publicPath}game/${item.roomId}/${item.imageB}`;
+      }
       if (item.type === 'VIDEO') return `${this.publicPath}game/common/play-video.jpg`;
+      if (item.type === 'MP3') return `${this.publicPath}game/common/play-audio-thumb.jpg`;
       if (item.type === 'PDF') return `${this.publicPath}game/common/file.png`;
+
       return `${this.publicPath}game/${item.roomId}/${item.image}`;
     },
     selectImage(item) {

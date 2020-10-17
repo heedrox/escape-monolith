@@ -2,7 +2,7 @@
   <div>
     <GameActions></GameActions>
     <Counter class="left-top box"></Counter>
-    <Map class="left-middle box" :active-room="activeRoom" @changeRoom="changeRoom($event)"></Map>
+    <Map class="left-middle box" :active-room="activeRoom" @change-room="changeRoom($event)"></Map>
     <CodeBreaker class="left-bottom box" :game-config="gameConfig"></CodeBreaker>
     <Room class="right box" :active-room="activeRoom" :game-config="gameConfig"></Room>
   </div>
