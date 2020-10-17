@@ -36,6 +36,8 @@ export default {
     anItem(205, 2, 'letras.jpg'),
     anItem(206, 2, 'teclado-normal.jpg'),
     aCorruptedItem(207, 2, 'letras.jpg', byNumberDestinataries([1], [1, 2])),
+    aCorruptedItem(208, 2, 'teclado-normal.jpg', byNumberDestinataries([2], [3])),
+    aCorruptedItem(209, 2, 'teclado-reves.jpg', byNumberDestinataries([2], [3])),
 
     anItem(301, 3, 'pasillo.jpg'),
     anItem(311, 3, 'pergamino-pasillo.jpg'),
