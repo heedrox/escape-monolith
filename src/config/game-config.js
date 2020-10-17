@@ -43,6 +43,9 @@ export default {
     aCorruptedItem(209, 2, 'teclado-reves.jpg', byNumberDestinataries([2], [3])),
     anItem(210, 2, 'humanos-idiotas.mp3', 'MP3'),
 
+    anItem(401, 4, 'room-4.jpg'),
+    anItem(402, 4, 'ladrillo-2.jpg'),
+
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),
     aDifferentItem(503, 5, 'pista-tooche-1a.jpg', 'pista-tooche-1b.jpg', byNumberDestinataries([1], [1,3])),
