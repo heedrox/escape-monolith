@@ -1,5 +1,7 @@
 const anItem = (id, roomId, image, type = '') =>
-  ({ id, roomId, image, type, corrupted: false });
+  ({ id, roomId, image, type, corrupted: false, invisible: false });
+const anInvisibleItem = (id, roomId, image, type = '') =>
+  ({ id, roomId, image, type, corrupted: false, invisible: true });
 const aCorruptedItem = (id, roomId, image, destinataries, type = '') =>
   ({ id, roomId, image, destinataries, type, corrupted: true });
 const aDifferentItem = (id, roomId, imageA, imageB, destinataries) =>
@@ -41,7 +43,8 @@ export default {
     aCorruptedItem(207, 2, 'letras.jpg', byNumberDestinataries([1], [1, 2])),
     aCorruptedItem(208, 2, 'teclado-normal.jpg', byNumberDestinataries([2], [3])),
     aCorruptedItem(209, 2, 'teclado-reves.jpg', byNumberDestinataries([2], [3])),
-    anItem(210, 2, 'humanos-idiotas.mp3', 'MP3'),
+    anItem(210, 2, '010-humanos-idiotas.mp3', 'MP3'),
+    anInvisibleItem(211, 2, '020-elevator.mp3', 'MP3'),
 
     anItem(401, 4, 'room-4.jpg'),
     anItem(402, 4, 'ladrillo-2.jpg'),

@@ -2,7 +2,7 @@
   <div>
     <div v-if="gameState && gameState.ready" class="all-items">
       <div class="items-container">
-        <RoomItem v-for="item in itemsInRoom"
+        <RoomItem v-for="item in visibleItemsInRoom"
                   :key="item.id"
                   :item="item"
                   :is-unlocked="isUnlocked(item.id)"
@@ -93,8 +93,10 @@ export default {
     gameState: firebaseUtil.doc('/')
   },
   computed: {
-    itemsInRoom() {
-      return this.gameConfig.items.filter(item => (item.roomId === this.activeRoom));
+    visibleItemsInRoom() {
+      return this.gameConfig.items
+          .filter(item => (item.roomId === this.activeRoom))
+          .filter(item => !item.invisible);
     }
   },
   watch: {
