@@ -1,3 +1,5 @@
+import NumbersGame from '@/components/game/plugins/numbers-game/NumbersGame';
+
 const anItem = (id, roomId, image, type = '') =>
   ({ id, roomId, image, type, corrupted: false, invisible: false });
 const anInvisibleItem = (id, roomId, image, type = '') =>
@@ -6,6 +8,8 @@ const aCorruptedItem = (id, roomId, image, destinataries, type = '') =>
   ({ id, roomId, image, destinataries, type, corrupted: true });
 const aDifferentItem = (id, roomId, imageA, imageB, destinataries) =>
   ( { id, roomId, imageA, imageB, destinataries, different: true });
+const aPluginItem = (id, roomId, image, pluginVue) =>
+  ( { id, roomId, image, pluginVue, plugin: true });
 const byNumberDestinataries = (ifTwo, ifThree) => ({ ifTwo, ifThree });
 
 export default {
@@ -43,11 +47,14 @@ export default {
     aCorruptedItem(207, 2, 'letras.jpg', byNumberDestinataries([1], [1, 2])),
     aCorruptedItem(208, 2, 'teclado-normal.jpg', byNumberDestinataries([2], [3])),
     aCorruptedItem(209, 2, 'teclado-reves.jpg', byNumberDestinataries([2], [3])),
-    anItem(210, 2, '010-humanos-idiotas.mp3', 'MP3'),
-    anInvisibleItem(211, 2, '020-elevator.mp3', 'MP3'),
+    anInvisibleItem(210, 2, '000-transmission.mp3', 'MP3'),
+    anItem(211, 2, '010-humanos-idiotas.mp3', 'MP3'),
+    anInvisibleItem(212, 2, '020-elevator.mp3', 'MP3'),
 
     anItem(401, 4, 'room-4.jpg'),
     anItem(402, 4, 'ladrillo-2.jpg'),
+    aPluginItem(403, 4, '', NumbersGame),
+
 
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),

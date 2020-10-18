@@ -7,6 +7,7 @@
     <SelectedAudioItem v-else-if="item.type === 'MP3'" :src="url" />
     <SelectedPdfItem v-else-if="item.type === 'PDF'" :src="url" />
     <SelectedPianoItem v-else-if="item.type === 'PIANO'" :alt="item.image" :src="url" />
+    <SelectedPluginItem v-else-if="item.plugin" :item="item" />
     <SelectedImageItem v-else :url="url" :item="item" />
   </div>
 </template>
@@ -39,6 +40,7 @@ import SelectedPdfItem from './items/SelectedPdfItem';
 import SelectedPianoItem from './items/SelectedPianoItem';
 import SelectedImageItem from './items/SelectedImageItem';
 import SelectedAudioItem from './items/SelectedAudioItem';
+import SelectedPluginItem from '@/components/game/room/items/SelectedPluginItem';
 
 export default {
   name: 'SelectedItem',
@@ -48,6 +50,7 @@ export default {
     SelectedVideoItem,
     SelectedAudioItem,
     SelectedImageItem,
+    SelectedPluginItem,
   },
   props: {
     url: {
