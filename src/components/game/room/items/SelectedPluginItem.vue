@@ -11,7 +11,8 @@
     left: 10vw;
     height:80vh;
     width:80vw;
-    background:black;
+    background-image: url('../../../../assets/common/screen-background.jpg');
+    background-repeat: repeat;
     white-space: nowrap; /* This is required unless you put the helper span closely near the img */
     text-align: center;
     border-color: rgb(13, 6, 182);
@@ -37,10 +38,5 @@ export default {
       default: null,
     },
   },
-  mounted() {
-    console.log(this.item)
-  },
-  methods: {
-  }
 }
 </script>

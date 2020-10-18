@@ -1,8 +1,5 @@
-import gameConfig from '../config/game-config';
 import { getNumberPlayers } from './get-number-players';
-
-const getPlayerNumber = () =>
-  gameConfig.players[Object.keys(gameConfig.players).find(code => window.location.href.indexOf(code)>=0)];
+import { getPlayerNumber } from '@/lib/get-player-number';
 
 export const isVisibleForMe = (destinataries) => {
   if (!destinataries) return true;
@@ -12,3 +9,4 @@ export const isVisibleForMe = (destinataries) => {
     destinataries.ifTwo.indexOf(playerNumber) < 0 :
     destinataries.ifThree.indexOf(playerNumber) < 0;
 };
+
