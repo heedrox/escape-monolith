@@ -1,15 +1,43 @@
 <template>
   <div>
-    <div v-for="(img, idx) in images" :key="img" :class="`divimg divimg${idx}`">
-      <div :class="`animage theImage{$img}`" :style="`background-image:url('${getImgPath(img)}')`">
-        <span v-if="canISee()" class="goal">{{  goal(img)  }}</span>
-        <span class="current">{{  currentValue(img) }}</span>
-        <span class="mysum">+{{ mySum(img) }}</span>
+    <div :class="[ 'turn', isTurnOk ? 'turnok' : '']">
+      {{ numberGameState.currentTurn + 1 }} / 3
+    </div>
+    <div class="progressbar" :style="`width:${progressBarWidth}vw`">
+    </div>
+    <div v-for="(img, idx) in images" :key="img"
+         :class="[ 'divimg', `divimg${idx}`, isSelected(img) ? 'imgselected' : '' ]"
+    >
+      <div :class="`animage theImage{$img}`" :style="`background-image:url('${getImgPath(img)}')`" @click="select(img)">
+        <span v-if="canISee()" class="goal">{{ goal(img) }}</span>
+        <span class="current">{{ currentValue[img] }}</span>
+        <span class="mysum">+{{ mySum() }}</span>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+.turn {
+  position:fixed;
+  font-family: 'SpaceJunk', Arial, Helvetica, serif;
+  color:white;
+  font-size: 4vh;
+  top:13vh;
+  left:13vw;
+}
+
+.turnok {
+  color: #8efc80;
+}
+
+.progressbar {
+  position:fixed;
+  background-color:#8efc80;
+  top:13vh;
+  left:11.1vw;
+  height:5vh;
+}
+
 .divimg {
   position: fixed;
   -webkit-filter: drop-shadow(0.2vh 0.2vh 0 #fff) drop-shadow(-0.2vh -0.2vh 0 #fff);
@@ -18,9 +46,15 @@
 
 .divimg:hover {
   position: fixed;
+  -webkit-filter: drop-shadow(2vh 2vh 1vh rgba(13, 6, 182, 0.5)) drop-shadow(-2vh -2vh 1vh rgba(13, 6, 182, 0.5)));
+  filter: drop-shadow(2vh 2vh 1vh rgba(13, 6, 182, 0.5)) drop-shadow(-2vh -2vh 1vh rgba(13, 6, 182, 0.5));
+  cursor: pointer;
+}
+
+.divimg.imgselected {
+  position: fixed;
   -webkit-filter: drop-shadow(2vh 2vh 0 rgb(13, 6, 182)) drop-shadow(-2vh -2vh rgb(13, 6, 182));
   filter: drop-shadow(2vh 2vh 0 rgb(13, 6, 182)) drop-shadow(-2vh -2vh rgb(13, 6, 182));
-  cursor: pointer;
 }
 
 .divimg .mysum {
@@ -88,6 +122,8 @@
 </style>
 <script>
 import { getPlayerNumber } from '@/lib/get-player-number';
+import firebaseUtil from '@/lib/firebase-util';
+import { isAdmin } from '@/lib/is-admin';
 
 const IMAGE_ORDERS = [
   [0, 0, 0, 0],
@@ -96,12 +132,12 @@ const IMAGE_ORDERS = [
   [3, 4, 2, 1]  //player 3 (or admin(
 ];
 
-const EACH_PLAYER_POINT = [
-  [0, 0, 0, 0], // admin (or player 3)
-  [2, 1, 2, 4], // player 1
-  [4, 4, 1, 2], // player 2
-  [1, 2, 4, 1], // admin (or player 3)
-]
+const BLANK_GAMESTATE = {
+  currentTurn: 0,
+  selectedPlayer1: null,
+  selectedPlayer2: null,
+  selectedPlayer3: null,
+};
 
 const aTurn = (goals, whoSees) => ({ goals, whoSees });
 
@@ -111,18 +147,54 @@ const TURNS = [
   aTurn([0, 2, 0, 4], 3),
 ];
 
+const pointsForImage = (gameState, imgNumber) =>
+    (gameState.selectedPlayer1 === imgNumber ? 1 : 0) +
+    (gameState.selectedPlayer2 === imgNumber ? 2 : 0) +
+    (gameState.selectedPlayer3 === imgNumber ? 4 : 0);
+
 export default {
   name: 'NumbersGame',
   data() {
     return {
       publicPath: process.env.BASE_URL,
-      currentTurn: 0,
+      numberGameState: {},
+      progressBarWidth: 0,
     };
   },
   computed: {
     images() {
       const playerNumber = getPlayerNumber() || 3;
       return IMAGE_ORDERS[playerNumber];
+    },
+    currentValue() {
+      //need 1,2,3,4 (o not used)
+      return [ 0,
+        pointsForImage(this.numberGameState, 1),
+        pointsForImage(this.numberGameState, 2),
+        pointsForImage(this.numberGameState, 3),
+        pointsForImage(this.numberGameState, 4) ];
+    },
+    isTurnOk() {
+      return (pointsForImage(this.numberGameState, 1) === this.goal(1)) &&
+          (pointsForImage(this.numberGameState, 2) === this.goal(2)) &&
+          (pointsForImage(this.numberGameState, 3) === this.goal(3)) &&
+          (pointsForImage(this.numberGameState, 4) === this.goal(4));
+    }
+  },
+  firestore: {
+    numberGameState: firebaseUtil.doc('/number-game/state')
+  },
+  watch: {
+    numberGameState() {
+      if (isAdmin() && this.numberGameState === null) {
+        this.$firestoreRefs.numberGameState.set(BLANK_GAMESTATE);
+      }
+      if (isAdmin() && this.isTurnOk) {
+        this.startCorrectProgressBar();
+      }
+      if (isAdmin() && !this.isTurnOk) {
+        this.stopCorrectProgressBar();
+      }
     }
   },
   mounted() {
@@ -133,23 +205,52 @@ export default {
     getImgPath(i) {
       return `${this.publicPath}game/plugins/numbers-game/panel-${i}.png`;
     },
-    mySum(img) {
+    mySum() {
       const playerNumber = getPlayerNumber() || 3;
-      //return EACH_PLAYER_POINT[playerNumber][img - 1];
       if (playerNumber === 1) return 1;
       if (playerNumber === 2) return 2;
       return 4;
     },
     goal(img) {
-      return TURNS[this.currentTurn].goals[img - 1];
+      if (!this.numberGameState) return '';
+      const currentTurn = this.numberGameState.currentTurn || 0;
+      return TURNS[currentTurn].goals[img - 1];
     },
     canISee() {
+      if (!this.numberGameState) return false;
+      const currentTurn = this.numberGameState.currentTurn || 0;
       const playerNumber = getPlayerNumber() || 3;
-      return TURNS[this.currentTurn].whoSees === playerNumber;
+      return TURNS[currentTurn].whoSees === playerNumber;
     },
-    currentValue(img) {
-      return '0';
+    select(img) {
+      const playerNumber = getPlayerNumber() || 3;
+      const objUpdate = {};
+      objUpdate[`selectedPlayer${playerNumber}`] = this.isSelected(img) ? null : img;
+      this.$firestoreRefs.numberGameState.update(objUpdate);
+    },
+    isSelected(img) {
+      const playerNumber = getPlayerNumber() || 3;
+      return this.numberGameState[`selectedPlayer${playerNumber}`] === img;
+    },
+    startCorrectProgressBar() {
+      this.startTimerDate = new Date();
+      this.timer = setInterval(() => {
+          const msecs = (new Date().getTime()-this.startTimerDate.getTime());
+        this.progressBarWidth = msecs / 5000 * 100 * 0.79;
+        if (msecs / 5000 >= 1) {
+          //achieved!
+          clearInterval(this.timer);
+          this.setAchievedTurn();
+        }
+      }, 50);
+    },
+    stopCorrectProgressBar() {
+      clearInterval(this.timer);
+      this.progressBarWidth=0;
+    },
+    setAchievedTurn() {
+      console.log('DONE!');
     }
-  }
+  },
 }
 </script>
