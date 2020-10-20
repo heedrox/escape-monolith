@@ -53,7 +53,7 @@ export default {
 
     anItem(401, 4, 'room-4.jpg'),
     anItem(402, 4, 'ladrillo-2.jpg'),
-    aPluginItem(403, 4, '', NumbersGame),
+    aPluginItem(403, 4, 'numbers-game.jpg', NumbersGame),
 
 
     anItem(501, 5, 'room-5.jpg'),

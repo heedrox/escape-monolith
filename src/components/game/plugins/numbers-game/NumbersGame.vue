@@ -1,18 +1,26 @@
 <template>
   <div>
-    <div :class="[ 'turn', isTurnOk ? 'turnok' : '']">
-      {{ numberGameState.currentTurn + 1 }} / 3
-    </div>
-    <div class="progressbar" :style="`width:${progressBarWidth}vw`">
-    </div>
-    <div v-for="(img, idx) in images" :key="img"
-         :class="[ 'divimg', `divimg${idx}`, isSelected(img) ? 'imgselected' : '' ]"
-    >
-      <div :class="`animage theImage{$img}`" :style="`background-image:url('${getImgPath(img)}')`" @click="select(img)">
-        <span v-if="canISee()" class="goal">{{ goal(img) }}</span>
-        <span class="current">{{ currentValue[img] }}</span>
-        <span class="mysum">+{{ mySum() }}</span>
+    <div v-if="(numberGameState.currentTurn>=0) && (numberGameState.currentTurn<3)">
+      <div :class="[ 'turn', isTurnOk ? 'turnok' : '']">
+        {{ numberGameState.currentTurn + 1 }} / 3
       </div>
+      <div class="progressbar" :style="`width:${progressBarWidth}vw`">
+      </div>
+      <div v-for="(img, idx) in images" :key="img"
+           :class="[ 'divimg', `divimg${idx}`, isSelected(img) ? 'imgselected' : '' ]"
+      >
+        <div :class="`animage theImage{$img}`"
+             :style="`background-image:url('${getImgPath(img)}')`"
+             @click="select(img)"
+        >
+          <span v-if="canISee()" class="goal">{{ goalTxt(img) }}</span>
+          <span class="current">{{ (currentValue[img] === 0) ? '' : currentValue[img] }}</span>
+          <span class="mysum">+{{ mySum() }}</span>
+        </div>
+      </div>
+    </div>
+    <div v-else class="door-open-msg">
+      :)
     </div>
   </div>
 </template>
@@ -36,6 +44,14 @@
   top:13vh;
   left:11.1vw;
   height:5vh;
+}
+
+.door-open-msg {
+  position:fixed;
+  color:#8efc80;
+  font-size:5vh;
+  top:40vh;
+  width:80vw;
 }
 
 .divimg {
@@ -137,6 +153,7 @@ const BLANK_GAMESTATE = {
   selectedPlayer1: null,
   selectedPlayer2: null,
   selectedPlayer3: null,
+  progressBar: 0,
 };
 
 const aTurn = (goals, whoSees) => ({ goals, whoSees });
@@ -144,8 +161,15 @@ const aTurn = (goals, whoSees) => ({ goals, whoSees });
 const TURNS = [
   aTurn([0, 1, 2, 4], 1),
   aTurn([3, 0, 0, 4], 2),
-  aTurn([0, 2, 0, 4], 3),
+  aTurn([0, 0, 7, 0], 3),
 ];
+
+const NEXT_TURN_STATE = nextTurn => ( {
+  currentTurn: nextTurn,
+  selectedPlayer1: null,
+  selectedPlayer2: null,
+  selectedPlayer3: null
+});
 
 const pointsForImage = (gameState, imgNumber) =>
     (gameState.selectedPlayer1 === imgNumber ? 1 : 0) +
@@ -189,10 +213,10 @@ export default {
       if (isAdmin() && this.numberGameState === null) {
         this.$firestoreRefs.numberGameState.set(BLANK_GAMESTATE);
       }
-      if (isAdmin() && this.isTurnOk) {
+      if (this.isTurnOk) {
         this.startCorrectProgressBar();
       }
-      if (isAdmin() && !this.isTurnOk) {
+      if (!this.isTurnOk) {
         this.stopCorrectProgressBar();
       }
     }
@@ -214,7 +238,13 @@ export default {
     goal(img) {
       if (!this.numberGameState) return '';
       const currentTurn = this.numberGameState.currentTurn || 0;
+      if (currentTurn >= 3) return 0;
       return TURNS[currentTurn].goals[img - 1];
+    },
+    goalTxt(img) {
+      if (!this.numberGameState) return '';
+      const theGoal = this.goal(img);
+      return (theGoal === 0) ? '' : theGoal;
     },
     canISee() {
       if (!this.numberGameState) return false;
@@ -236,8 +266,8 @@ export default {
       this.startTimerDate = new Date();
       this.timer = setInterval(() => {
           const msecs = (new Date().getTime()-this.startTimerDate.getTime());
-        this.progressBarWidth = msecs / 5000 * 100 * 0.79;
-        if (msecs / 5000 >= 1) {
+        this.progressBarWidth = msecs / 3000 * 100 * 0.79;
+        if (msecs / 3000 >= 1) {
           //achieved!
           clearInterval(this.timer);
           this.setAchievedTurn();
@@ -249,7 +279,12 @@ export default {
       this.progressBarWidth=0;
     },
     setAchievedTurn() {
-      console.log('DONE!');
+      if (isAdmin()) {
+        console.log('DONE!');
+        const nextTurn = (this.numberGameState.currentTurn || 0) + 1;
+        this.$firestoreRefs.numberGameState.update(NEXT_TURN_STATE(nextTurn));
+      }
+
     }
   },
 }
