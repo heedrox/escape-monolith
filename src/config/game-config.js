@@ -22,19 +22,12 @@ export default {
   },
   codes: [
     '0000', //to test
-    'SPIG', //Qs and Os
+    'MORID', //room2 - parte 1
+    'HUMAN', //room2 - parte 2
+    'OSHOY', //room2 - parte 3
     // '563403408', // poligonos cuadros
-    '5703681924', // Tiburon
-    'C4QN8', //cuadros archiduque
-    '14396', //LEARN - Disney
-    'EBGFA', //PIANO
-    // 'OGALU', //runas
-    '86204', //arana escarabajo ...
-    '9454', //vela, ojo, constelacion, serpiente
-    '9458', //vela, ojo, constelacion, serpiente
-    'ELMOMO',
-    // 'ELMOWOW',
-    // 'OEMECWE',
+    '4985', //room6
+    'C7xxxx', //room5
   ],
   items: [
     anItem(201, 2, 'pared-de-tres-letras.jpg'),
@@ -59,6 +52,11 @@ export default {
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),
     aDifferentItem(503, 5, 'pista-tooche-1a.jpg', 'pista-tooche-1b.jpg', byNumberDestinataries([1], [1,3])),
+
+    anItem(601, 6, 'room-6.jpg'),
+    anItem(602, 6, 'room-6-constelations.jpg'),
+
+
     anItem(304, 3, 'tomb-room.jpg'),
     anItem(305, 3, 'closed-tomb.jpg'),
     anItem(310, 3, 'pergamino-in-tomb.jpg'),
