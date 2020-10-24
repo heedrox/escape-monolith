@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Welcome v-if="state === 'WELCOME'" @start="doPlay()" />
+    <Welcome v-if="state === 'WELCOME'" @start="createCode(); startVideo()" />
+    <Videoconference v-if="videoActive" @start="startGame()" />
     <Game v-if="state === 'GAME'"></Game>
   </div>
 </template>
@@ -8,27 +9,48 @@
 <script>
 import Welcome from './components/welcome/Welcome.vue'
 import Game from './components/game/Game';
+import Videoconference from './components/videoconference/Videoconference';
 import './assets/common/normalize.css'
 import './assets/common/common.css'
+import firebaseUtil from '@/lib/firebase-util';
 
 const STATES = {
   WELCOME: 'WELCOME',
   GAME: 'GAME',
+  VIDEO: 'VIDEO',
 };
+
+const BLANK_FIREBASE_GAME = { ready: true, unlockedItems: [], unlockedRooms: [2]};
 
 export default {
   name: 'App',
   components: {
     Welcome,
-    Game
+    Game,
+    Videoconference
   },
   data() {
     return {
       state: STATES.WELCOME,
+      videoActive: false,
+
     }
   },
+  firestore: {
+    gameState: firebaseUtil.doc('/')
+  },
   methods: {
-    doPlay() {
+    createCode() {
+      if (!this.gameState) {
+        console.log('Creating game state');
+        this.$firestoreRefs.gameState.set(BLANK_FIREBASE_GAME);
+      }
+    },
+    startVideo() {
+      this.state = STATES.VIDEO;
+      this.videoActive = true;
+    },
+    startGame() {
       this.state = STATES.GAME;
     }
   }

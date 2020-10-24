@@ -19,8 +19,11 @@
         </div>
       </div>
     </div>
-    <div v-else class="door-open-msg">
-      :)
+    <div v-else>
+      <div class="door-open-msg">
+        :)
+      </div>
+      <img class="theplanet" :src="`${publicPath}game/4/mundo-pista.png`">
     </div>
   </div>
 </template>
@@ -134,6 +137,14 @@
   left: 15vw;
   top: 4vw;
   text-align: left;
+}
+.theplanet {
+  max-width:10vh;
+  max-height:10vh;
+  position:fixed;
+  top:15vh;
+  left:15vw;
+  opacity: 0.4;
 }
 </style>
 <script>

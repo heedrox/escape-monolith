@@ -15,11 +15,6 @@
       <p>Humanos,</p>
       <p><br /><br /></p>
       <p>Demostradnos lo que valéis</p>
-      <p>
-        <button v-if="isAdmin()" @click="createGamecode()">
-          RESET CODIGO
-        </button>
-      </p>
     </div>
     <SelectedItem v-if="selectedItem"
                   :item="selectedItem"
@@ -128,11 +123,6 @@ export default {
     },
     isUnlocked(itemId) {
       return this.gameState.unlockedItems.indexOf(itemId) >= 0;
-    },
-    createGamecode() {
-      if (window.confirm('Esto reseteará todo el juego. ¿Seguro?')) {
-        this.$firestoreRefs.gameState.set({ ready: true, unlockedItems: [], unlockedRooms: [2]});
-      }
     },
     closeImageIfOpen() {
       if (!this.gameState) return;

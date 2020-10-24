@@ -8,7 +8,6 @@
       <a v-if="existsRoom(4)" href="#" :class="adminGetClassFor(4)" @click.prevent="adminUnlock(4)">4</a>
       <a v-if="existsRoom(5)" href="#" :class="adminGetClassFor(5)" @click.prevent="adminUnlock(5)">5</a>
       <a v-if="existsRoom(6)" href="#" :class="adminGetClassFor(6)" @click.prevent="adminUnlock(6)">6</a>
-      <a v-if="existsRoom(7)" href="#" :class="adminGetClassFor(7)" @click.prevent="adminUnlock(7)">7</a>
       <a v-if="existsRoom(8)" href="#" :class="adminGetClassFor(8)" @click.prevent="adminUnlock(8)">8</a>
       <a v-if="existsRoom(9)" href="#" :class="adminGetClassFor(9)" @click.prevent="adminUnlock(9)">9</a>
     </div>

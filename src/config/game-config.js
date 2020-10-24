@@ -33,6 +33,10 @@ export default {
     // '563403408', // poligonos cuadros
     '4985', //room6
     'C7B1xx', //room5
+    'DBFA', //room 9 - part 1
+    'KNMI', //room 9 - part 2
+    'XTRU', //room 9 - part 3
+    'DBFAKNMIXTRU', //room 9 - all , just in case they try like this also
   ],
   items: [
     anItem(201, 2, 'pared-de-tres-letras.jpg'),
