@@ -52,6 +52,11 @@ export default {
   font-family: 'MarasEye';
   src: url('./assets/common/maras-eye.ttf')  format('truetype')
 }
+
+@font-face {
+  font-family: 'Alien';
+  src: url('./assets/common/aliendude.ttf')  format('truetype')
+}
 #app {
   font-family: 'SpaceAge', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

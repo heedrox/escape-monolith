@@ -47,18 +47,19 @@
     <div class="separator"></div>
     <div class="separator" :class="getClassForSeparator('vertical', 4,7)"></div>
     <div class="separator"></div>
+    <div class="separator" :class="getClassForSeparator('vertical', 5,8)"></div>
     <div class="separator"></div>
+    <div class="separator" :class="getClassForSeparator('vertical', 6,9)"></div>
     <div class="separator"></div>
-    <div class="separator" :class="getClassForSeparator('vertical', 6,8)"></div>
-    <div class="separator"></div>
-
 
     <div class="separator"></div>
     <div class="room box room7" :class="getClassForRoom(7)" @click="changeRoom(7)"></div>
     <div class="separator"></div>
+    <div class="room box room8" :class="getClassForRoom(8)" @click="changeRoom(8)"></div>
     <div class="separator"></div>
+    <div class="room box room9" :class="getClassForRoom(9)" @click="changeRoom(9)"></div>
     <div class="separator"></div>
-    <div class="separator"></div>
+
 
     <div class="separator"></div>
     <div class="separator"></div>

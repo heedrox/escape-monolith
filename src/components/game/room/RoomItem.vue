@@ -41,6 +41,8 @@
 <script>
 import { isAdmin } from '../../../lib/is-admin';
 import { isVisibleForMe } from '../../../lib/is-visible-destinatary';
+import { getPlayerNumber } from '@/lib/get-player-number';
+import { getNumberPlayers } from '@/lib/get-number-players';
 
 export default {
   name: 'RoomItem',
@@ -81,6 +83,12 @@ export default {
         return isVisibleForMe(item.destinataries) ?
           `${this.publicPath}game/${item.roomId}/${item.imageA}` :
           `${this.publicPath}game/${item.roomId}/${item.imageB}`;
+      }
+      if (item.differentMultiple) {
+        const playerNumber = getPlayerNumber() || (getNumberPlayers());
+        const byImageForMe = img => img.whoSees.indexOf(playerNumber) >= 0;
+        const theImage = item.images.filter(byImageForMe)[0].image;
+        return `${this.publicPath}game/${item.roomId}/${theImage}`;
       }
       if (item.type === 'VIDEO') return `${this.publicPath}game/common/play-video.jpg`;
       if (item.type === 'MP3') return `${this.publicPath}game/common/play-audio-thumb.jpg`;

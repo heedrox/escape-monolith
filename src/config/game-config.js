@@ -1,4 +1,6 @@
 import NumbersGame from '@/components/game/plugins/numbers-game/NumbersGame';
+import MasterMind from '@/components/game/plugins/master-mind/MasterMind';
+import { getNumberPlayers } from '@/lib/get-number-players';
 
 const anItem = (id, roomId, image, type = '') =>
   ({ id, roomId, image, type, corrupted: false, invisible: false });
@@ -8,6 +10,9 @@ const aCorruptedItem = (id, roomId, image, destinataries, type = '') =>
   ({ id, roomId, image, destinataries, type, corrupted: true });
 const aDifferentItem = (id, roomId, imageA, imageB, destinataries) =>
   ( { id, roomId, imageA, imageB, destinataries, different: true });
+const aDifferentItemMultiple = (id, roomId, images) =>
+  ( { id, roomId, images, differentMultiple: true });
+const anImageFor = (image, whoSees) => ({image, whoSees});
 const aPluginItem = (id, roomId, image, pluginVue) =>
   ( { id, roomId, image, pluginVue, plugin: true });
 const byNumberDestinataries = (ifTwo, ifThree) => ({ ifTwo, ifThree });
@@ -56,7 +61,18 @@ export default {
     anItem(601, 6, 'room-6.jpg'),
     anItem(602, 6, 'room-6-constelations.jpg'),
 
-
+    anItem(901, 9, 'room-9.jpg'),
+    aPluginItem(902, 9, 'alien-keypad.jpg', MasterMind),
+    (getNumberPlayers() === 2) ?
+      aDifferentItemMultiple(903, 9, [
+        anImageFor('aliens-2.jpg', [1]),
+        anImageFor('aliens-1.jpg', [2])
+        ]) :
+      aDifferentItemMultiple(903, 9, [
+        anImageFor('aliens-2-3.jpg', [1]),
+        anImageFor('aliens-1-3.jpg', [2]),
+        anImageFor('aliens-1-2.jpg', [3])
+        ]),
     anItem(304, 3, 'tomb-room.jpg'),
     anItem(305, 3, 'closed-tomb.jpg'),
     anItem(310, 3, 'pergamino-in-tomb.jpg'),
