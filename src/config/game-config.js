@@ -32,7 +32,7 @@ export default {
     'OSHOY', //room2 - parte 3
     // '563403408', // poligonos cuadros
     '4985', //room6
-    'C7xxxx', //room5
+    'C7B1xx', //room5
   ],
   items: [
     anItem(201, 2, 'pared-de-tres-letras.jpg'),
@@ -73,7 +73,7 @@ export default {
         anImageFor('aliens-1-3.jpg', [2]),
         anImageFor('aliens-1-2.jpg', [3])
         ]),
-    anItem(304, 3, 'tomb-room.jpg'),
+    aDifferentItem(904, 9, 'pista-tooche-2.jpg', 'pista-tooche-2b.jpg', byNumberDestinataries([2], [2,3])),
     anItem(305, 3, 'closed-tomb.jpg'),
     anItem(310, 3, 'pergamino-in-tomb.jpg'),
     anItem(306, 3, 'lock-tomb-1.jpg'),

@@ -59,11 +59,10 @@
 <script>
 import SelectedItem from './SelectedItem';
 import RoomItem from './RoomItem';
-import { isAdmin } from '../../../lib/is-admin';
-import { isVisibleForMe } from '../../../lib/is-visible-destinatary';
+import { isAdmin } from '@/lib/is-admin';
+import { imageUrlResolve } from './image-url-resolve';
 import firebaseUtil from '../../../lib/firebase-util';
-import { getPlayerNumber } from '@/lib/get-player-number';
-import { getNumberPlayers } from '@/lib/get-number-players';
+
 
 export default {
   name: 'Room',
@@ -119,21 +118,7 @@ export default {
       this.$firestoreRefs.gameState.update( { unlockedItems: this.gameState.unlockedItems });
     },
     getUrl(item) {
-      if (item.corrupted && !isAdmin() && isVisibleForMe(item.destinataries)) {
-        return `${this.publicPath}game/common/corrupted-image.jpg`;
-      }
-      if (item.different) {
-        return isVisibleForMe(item.destinataries) ?
-          `${this.publicPath}game/${item.roomId}/${item.imageA}` :
-          `${this.publicPath}game/${item.roomId}/${item.imageB}`;
-      }
-      if (item.differentMultiple) {
-        const playerNumber = getPlayerNumber() || (getNumberPlayers());
-        const byImageForMe = img => img.whoSees.indexOf(playerNumber) >= 0;
-        const theImage = item.images.filter(byImageForMe)[0].image;
-        return `${this.publicPath}game/${item.roomId}/${theImage}`;
-      }
-      return `${this.publicPath}game/${item.roomId}/${item.image}`
+      return imageUrlResolve(item, this.publicPath);
     },
     selectImage(item) {
       this.selectedItem = item;
