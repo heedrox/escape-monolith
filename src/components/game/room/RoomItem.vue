@@ -74,7 +74,7 @@ export default {
       this.$emit('toggle-lock', item);
     },
     getUrl(item) {
-      return imageUrlResolve(item, this.publicPath);
+      return imageUrlResolve(item, this.publicPath, true);
     },
     selectImage(item) {
       this.$emit('select-image', item);

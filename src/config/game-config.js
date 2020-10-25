@@ -65,6 +65,8 @@ export default {
     anItem(601, 6, 'room-6.jpg'),
     anItem(602, 6, 'room-6-constelations.jpg'),
 
+    anItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
+
     anItem(901, 9, 'room-9.jpg'),
     aPluginItem(902, 9, 'alien-keypad.jpg', MasterMind),
     (getNumberPlayers() === 2) ?

@@ -113,7 +113,7 @@ export default {
       this.$firestoreRefs.gameState.update( { unlockedItems: this.gameState.unlockedItems });
     },
     getUrl(item) {
-      return imageUrlResolve(item, this.publicPath);
+      return imageUrlResolve(item, this.publicPath, false);
     },
     selectImage(item) {
       this.selectedItem = item;
