@@ -77,7 +77,7 @@ export default {
         anImageFor('aliens-1-3.jpg', [2]),
         anImageFor('aliens-1-2.jpg', [3])
         ]),
-    aDifferentItem(904, 9, 'pista-tooche-2.jpg', 'pista-tooche-2b.jpg', byNumberDestinataries([2], [2,3])),
+    aDifferentItem(904, 9, 'tooche-pista-2.jpg', 'tooche-pista-2b.jpg', byNumberDestinataries([2], [2,3])),
     anItem(305, 3, 'closed-tomb.jpg'),
     anItem(310, 3, 'pergamino-in-tomb.jpg'),
     anItem(306, 3, 'lock-tomb-1.jpg'),

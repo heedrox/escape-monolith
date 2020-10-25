@@ -3,7 +3,7 @@
     <div v-show="!iframeLoaded" class="loadingvideo">
       Cargando video...
     </div>
-    <div v-show="!started" id="jitsimeet"></div>
+    <div v-show="!gameState.hideVideo" id="jitsimeet"></div>
     <div class="videobtns">
       <button v-if="isAdmin()" @click="muteAll()">
         MUTE
@@ -40,8 +40,7 @@ export default {
   emits: ['start'],
   data() {
     return {
-      started: false,
-      gameState: null,
+      gameState: {  hideVideo: false },
       iframeLoaded: false,
     };
   },
@@ -50,13 +49,13 @@ export default {
   },
   watch: {
     gameState() {
-      console.log('gameState changed', this.gameState);
-      if (this.gameState.started) {
-        this.started = true;
+      if (this.gameState.hideVideo === true) {
+        this.$emit('start');
       }
     }
   },
   mounted() {
+    this.$firestoreRefs.gameState.update( { hideVideo: false }); //make sure we start with video not hidden
     const domain = 'meet.jit.si';
     const options = {
       roomName: 'escape-monolith-'+getGameCode(),
@@ -75,7 +74,7 @@ export default {
       return isAdmin();
     },
     doStart() {
-      this.$firestoreRefs.gameState.update( { started: true });
+      this.$firestoreRefs.gameState.update( { hideVideo: true });
       this.$emit('start');
     },
   },
