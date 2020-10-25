@@ -14,6 +14,8 @@
           -moz-user-select: none;
           -ms-user-select: none;
           user-select: none;
+          background:#fff;
+          overflow: hidden;
       }
 
       #top, #bottom {
@@ -83,12 +85,12 @@ $(document).on('touchstart', function(e) {
 
 function getBoardId() {
   const currentHash = window.location.hash.replace(/#/g, '') || "default";
-  return currentHash.split('-')[0];
+  return currentHash.split('_')[0];
 }
 
 function getPlayer() {
   const currentHash = window.location.hash.replace(/#/g, '') || "default";
-  return currentHash.split('-')[1];
+  return currentHash.split('_')[1];
 }
 
 function getColorPlayer() {

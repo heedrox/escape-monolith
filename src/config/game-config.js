@@ -1,6 +1,7 @@
 import NumbersGame from '@/components/game/plugins/numbers-game/NumbersGame';
 import MasterMind from '@/components/game/plugins/master-mind/MasterMind';
 import { getNumberPlayers } from '@/lib/get-number-players';
+import Whiteboard from '@/components/game/plugins/whiteboard/Whiteboard';
 
 const anItem = (id, roomId, image, type = '') =>
   ({ id, roomId, image, type, corrupted: false, invisible: false });
@@ -67,6 +68,7 @@ export default {
     anItem(602, 6, 'room-6-constelations.jpg'),
 
     anItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
+    aPluginItem(802, 8, 'whiteboard.jpg', Whiteboard),
 
     anItem(901, 9, 'room-9.jpg'),
     aPluginItem(902, 9, 'alien-keypad.jpg', MasterMind),
