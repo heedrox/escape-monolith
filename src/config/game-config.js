@@ -32,7 +32,7 @@ export default {
     'OSHOY', //room2 - parte 3
     // '563403408', // poligonos cuadros
     '4985', //room6
-    'C7B1xx', //room5
+    'C7B1B6', //room5
     'DBFA', //room 9 - part 1
     'KNMI', //room 9 - part 2
     'XTRU', //room 9 - part 3
@@ -56,7 +56,7 @@ export default {
     anItem(401, 4, 'room-4.jpg'),
     anItem(402, 4, 'ladrillo-2.jpg'),
     aPluginItem(403, 4, 'numbers-game.jpg', NumbersGame),
-
+    aDifferentItem(404, 4, 'tooche-pista-3.jpg', 'tooche-pista-3b.jpg', byNumberDestinataries([2], [1,2])),
 
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),
