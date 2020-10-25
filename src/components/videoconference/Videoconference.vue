@@ -8,8 +8,11 @@
       <button v-if="isAdmin()" @click="muteAll()">
         MUTE
       </button>
+      <button v-if="isAdmin()" @click="unmuteAll()">
+        UN-MUTE
+      </button>
       <button v-if="isAdmin()" @click="doStart()">
-        START
+        START GAME
       </button>
     </div>
   </div>
@@ -40,7 +43,7 @@ export default {
   emits: ['start'],
   data() {
     return {
-      gameState: {  hideVideo: false },
+      gameState: { },
       iframeLoaded: false,
     };
   },
@@ -49,13 +52,17 @@ export default {
   },
   watch: {
     gameState() {
+      console.log('game state changed!', this.gameState);
       if (this.gameState.hideVideo === true) {
         this.$emit('start');
+      }
+      if (this.gameState.unmute === true) {
+        this.unmuteEach();
       }
     }
   },
   mounted() {
-    this.$firestoreRefs.gameState.update( { hideVideo: false }); //make sure we start with video not hidden
+    this.$firestoreRefs.gameState.update( { hideVideo: false, unmute: false });
     const domain = 'meet.jit.si';
     const options = {
       roomName: 'escape-monolith-'+getGameCode(),
@@ -66,9 +73,27 @@ export default {
     };
     this.jitsiApi = new JitsiMeetExternalAPI(domain, options);
   },
+  destroyed() {
+    this.jitsiApi.dispose();
+  },
   methods: {
     muteAll() {
+      this.$firestoreRefs.gameState.update( { unmute: false });
       this.jitsiApi.executeCommand('muteEveryone')
+    },
+    unmuteAll() {
+      this.$firestoreRefs.gameState.update( { unmute: true });
+    },
+    unmuteEach() {
+      console.log('im going to be unmuted');
+      this.jitsiApi.isAudioMuted().then(muted => {
+        console.log('received muted', muted);
+        if (muted) {
+          this.jitsiApi.executeCommand('toggleAudio');
+        } else {
+          console.log('not muted, ignoring...');
+        }
+      });
     },
     isAdmin() {
       return isAdmin();
