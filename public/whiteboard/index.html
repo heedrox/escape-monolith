@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<head>
+  <title>Whiteboard</title>
+  <style type="text/css">
+      body {
+          margin: 0;
+          padding: 0;
+          font-family: arial,sans-serif;
+          font-size :11px;
+
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+      }
+
+      #top, #bottom {
+          border:1px solid gray;
+      }
+
+      #top {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 2;
+      }
+
+      #toolbar {
+          position: absolute;
+          top: 0;
+          width: 800px;
+          z-index: 4;
+          margin: 1px;
+          padding: 3px;
+          background-color: #e2e2e2;
+          box-sizing: border-box;
+      }
+
+      div.cursor {
+          position: absolute;
+          border:1px solid red;
+          border-width: 1px 0 0 1px;
+          z-index: 3;
+          pointer-events: none;
+      }
+
+      input[type=radio] {
+          display: none;
+      }
+      #toolbar img {
+          height: 32px;
+          width: 32px;
+      }
+
+  </style>
+  <meta content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;' name='viewport' />
+  <meta name="viewport" content="width=device-width" />
+
+</head>
+
+<body style="max-width: 320px; max-height: 100%;">
+<canvas id="bottom" width="800" height="400"></canvas>
+<canvas id="top" width="800" height="400"></canvas>
+
+<div id="toolbar">
+  <span id="clear" hotkey="67"><img src="images/clear.png"></span>
+  <label><input id="theBrush" type="radio" name="brush" data-color="#000000" data-thickness="2" checked="checked"/></label>
+</div>
+
+<script type="text/javascript" src="./whiteboard-config.js"></script>
+<script type="text/javascript" src="https://cdn.firebase.com/js/client/1.0.17/firebase.js"></script>
+<script type="text/javascript" src="underscore-min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+// Prevent mobile dragging
+$(document).on('touchstart', function(e) {
+  if (e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'IMG' ) {
+    e.preventDefault();
+  }
+});
+
+function getBoardId() {
+  const currentHash = window.location.hash.replace(/#/g, '') || "default";
+  return currentHash.split('-')[0];
+}
+
+function getPlayer() {
+  const currentHash = window.location.hash.replace(/#/g, '') || "default";
+  return currentHash.split('-')[1];
+}
+
+function getColorPlayer() {
+  const playerNumber = parseInt(getPlayer());
+  const COLORS = [ '#000000', '#800000', '#000080', '#008000'];
+  return COLORS[playerNumber];
+
+}
+
+$(document).ready(function() {
+
+  var width = 800;
+  var height = 400;
+
+  var rootRef = new Firebase(window.FIREBASE_CONFIG.database);
+
+  //Choose a random whiteboard
+  var boardId = getBoardId();
+
+  //if the hash changes again, reload the page
+  setTimeout(function() {
+    $(window).on('hashchange', function() {
+      window.location.reload();
+    });
+  }, 0);
+
+  var boardRef = rootRef.child(boardId);
+  var layersRef = boardRef.child('layers');
+  var usersRef = boardRef.child('users');
+  var userRef = usersRef.child(getPlayer());
+
+  var $body = $("body");
+
+  var $bottomCanvas = $('#bottom');
+  var $topCanvas = $('#top');
+
+  var bottomCanvas = $bottomCanvas.get(0);
+  var topCanvas = $topCanvas.get(0);
+
+  var bottomCtx = bottomCanvas.getContext('2d');
+  var topCtx = topCanvas.getContext('2d');
+
+  var newLayer;
+
+  // View:
+
+  var clear = function(ctx) {
+    ctx.clearRect(0, 0, width, height);
+  };
+
+  var drawLayer = function(ctx, layer) {
+    ctx.beginPath();
+    ctx.lineWidth = layer.thickness;
+    ctx.strokeStyle = layer.color;
+    ctx.moveTo(layer.points[0].x, layer.points[0].y);
+    _.each(_.rest(layer.points, 1), function(point) {
+      ctx.lineTo(point.x, point.y);
+    });
+    ctx.stroke();
+  };
+
+  var showNewLayer = function() {
+    clear(topCtx);
+    drawLayer(topCtx, newLayer);
+  };
+
+  var drawChild = function(snapshot) {
+    drawLayer(bottomCtx, snapshot.val());
+  };
+
+  var redraw = function() {
+    clear(bottomCtx);
+    layersRef.once('value', function(snapshot) {
+      snapshot.forEach(drawChild);
+    });
+  };
+
+  layersRef.on('child_added', drawChild);
+  layersRef.on('child_removed', redraw);
+
+  usersRef.on('child_changed', function(snapshot) {
+    var name = snapshot.name();
+    var user = snapshot.val();
+
+    id = "cursor_"+name;
+    var $cursor = $("#"+id);
+    if(!$cursor.length) {
+      $cursor = $('<div>').attr('id', id).addClass('cursor').text(name)
+        .appendTo('body');
+    }
+
+    $cursor.css('left', user.cursorPoint.x).css('top', user.cursorPoint.y);
+  });
+
+  usersRef.on('child_removed', function(snapshot) {
+    $("#cursor_"+snapshot.name()).remove();
+  });
+
+  // User input:
+
+  userRef.onDisconnect().remove();
+
+  $topCanvas.on('mousedown', function(e) {
+    newLayer = {
+      points: [{x: e.pageX, y: e.pageY}],
+      color: getColorPlayer(),
+      thickness: 2
+    };
+
+    var now = function() { return new Date().getTime() };
+    var last = 0;
+    $body.on('mousemove.brush', function(e) {
+      if(last < now() - 20) {
+        newLayer.points.push({x: e.pageX, y: e.pageY});
+        showNewLayer();
+        last = now();
+      }
+    });
+
+    $body.one('mouseup', function(e) {
+      $body.off('mousemove.brush');
+      layersRef.push(newLayer);
+      clear(topCtx);
+    });
+  });
+
+  $body.on(
+    'mousemove',
+    _.throttle(function(e) {
+      userRef.child('cursorPoint').set({x: e.pageX, y: e.pageY});
+    }, 30)
+  );
+
+
+  function touchHandler(event)
+  {
+    var touches = event.changedTouches,
+      first = touches[0],
+      type = "";
+    switch(event.type)
+    {
+      case "touchstart": type = "mousedown"; break;
+      case "touchmove":  type="mousemove"; break;
+      case "touchend":   type="mouseup"; break;
+      default: return;
+    }
+
+    //initMouseEvent(type, canBubble, cancelable, view, clickCount,
+    //           screenX, screenY, clientX, clientY, ctrlKey,
+    //           altKey, shiftKey, metaKey, button, relatedTarget);
+
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent(type, true, true, window, 1,
+      first.screenX, first.screenY,
+      first.clientX, first.clientY, false,
+      false, false, false, 0/*left*/, null);
+    first.target.dispatchEvent(simulatedEvent);
+    //event.preventDefault();
+  }
+
+  function init()
+  {
+    document.addEventListener("touchstart", touchHandler, true);
+    document.addEventListener("touchmove", touchHandler, true);
+    document.addEventListener("touchend", touchHandler, true);
+    document.addEventListener("touchcancel", touchHandler, true);
+  }
+
+  init();
+
+  $("#clear").on('click', function() {
+    layersRef.remove();
+  });
+
+  $("#undo").on('click', function() {
+    var query = layersRef.limit(1);
+    query.once('child_added', function(snapshot) {
+      layersRef.child(snapshot.name()).remove();
+    });
+  });
+
+  $(document).keydown(function(e) {
+    console.log(e.which);
+    $("*[hotkey="+e.which+"]").click();
+  });
+
+  // prevent text cursor from showing up as you draw
+  topCanvas.onselectstart = function () { return false; };
+});
+
+</script>
+</body>

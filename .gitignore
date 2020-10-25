@@ -21,3 +21,4 @@ yarn-error.log*
 *.sw?
 
 db-options.js
+/public/whiteboard/whiteboard-config.js

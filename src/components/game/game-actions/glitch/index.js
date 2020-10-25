@@ -24,7 +24,10 @@ const timeout = (msecs) => new Promise((resolve, _) => {
 const glitchAction = () => {
   html2canvas(document.body).then(async (canvas) => {
     console.log(canvas);
-    document.getElementById('app').style.display = 'none';
+    canvas.style.position = 'fixed';
+    canvas.style.zIndex = '999';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
     document.body.appendChild(canvas);
     const publicPath = process.env.BASE_URL;
     const audio = new Audio(`${publicPath}game/common/glitch.mp3`);
@@ -39,7 +42,6 @@ const glitchAction = () => {
     audio.pause();
     audio.currentTime = 0;
     document.body.removeChild(canvas);
-    document.getElementById('app').style.display = 'block';
   })
 };
 
