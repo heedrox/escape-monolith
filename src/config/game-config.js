@@ -69,6 +69,8 @@ export default {
 
     anItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
     aPluginItem(802, 8, 'whiteboard.jpg', Whiteboard),
+    aDifferentItem(803, 8, 'animales-solucion-1.jpg', 'animales-1.jpg', byNumberDestinataries([1], [1])),
+    aDifferentItem(804, 8, 'animales-solucion-2.jpg', 'animales-2.jpg', byNumberDestinataries([1], [1])),
 
     anItem(901, 9, 'room-9.jpg'),
     aPluginItem(902, 9, 'alien-keypad.jpg', MasterMind),
@@ -83,14 +85,6 @@ export default {
         anImageFor('aliens-1-2.jpg', [3])
         ]),
     aDifferentItem(904, 9, 'tooche-pista-2.jpg', 'tooche-pista-2b.jpg', byNumberDestinataries([2], [2,3])),
-    anItem(305, 3, 'closed-tomb.jpg'),
-    anItem(310, 3, 'pergamino-in-tomb.jpg'),
-    anItem(306, 3, 'lock-tomb-1.jpg'),
-    anItem(307, 3, 'lock-tomb-2.jpg'),
-    anItem(308, 3, 'open-tomb.jpg'),
-    anItem(309, 3, 'the-end.mp4', 'VIDEO'),
 
-
-  //  anItem(703, 7, 'movie-maldicion.mp4', 'VIDEO'),
   ]
 }

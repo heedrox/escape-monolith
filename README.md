@@ -34,3 +34,5 @@ Image from: https://www.freepng.es/png-j4ki2j/download.html. ONLY FOR PERSONAL U
 Buttons for the number game made by punchdev.com. thanks for this free awesome stuff!
 Alien dude font - http://www.dcoxy.com (free for non commercial use)
 Thanks to the whiteboard for firebase in -> https://github.com/mimming/firebase-whiteboard-mobile-demo
+<a href='https://www.freepik.com/vectors/poster'>Poster vector created by valadzionak_volha - www.freepik.com</a>
+
