@@ -1,7 +1,8 @@
 <template>
   <div>
     <iframe width="800" height="400"
-            :src="`${publicPath}whiteboard/index.html#${getGameCode()}_${getPlayerNumber()}`"></iframe>
+            :src="`${publicPath}whiteboard/index.html#${getGameCode()}_${getPlayerNumber()}`"
+    />
   </div>
 </template>
 <style>

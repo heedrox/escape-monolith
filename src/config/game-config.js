@@ -38,6 +38,7 @@ export default {
     'KNMI', //room 9 - part 2
     'XTRU', //room 9 - part 3
     'DBFAKNMIXTRU', //room 9 - all , just in case they try like this also
+    'DCBAM', //room 8
   ],
   items: [
     anItem(201, 2, 'pared-de-tres-letras.jpg'),
@@ -68,9 +69,11 @@ export default {
     anItem(602, 6, 'room-6-constelations.jpg'),
 
     anItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
-    aPluginItem(802, 8, 'whiteboard.jpg', Whiteboard),
+    anItem(802, 8, 'room-8.jpg'),
     aDifferentItem(803, 8, 'animales-solucion-1.jpg', 'animales-1.jpg', byNumberDestinataries([1], [1])),
     aDifferentItem(804, 8, 'animales-solucion-2.jpg', 'animales-2.jpg', byNumberDestinataries([1], [1])),
+    aDifferentItem(805, 8, 'panel-room8-solucion.jpg', 'panel-room8.jpg', byNumberDestinataries([2], [3])),
+    aPluginItem(806, 8, 'whiteboard.jpg', Whiteboard),
 
     anItem(901, 9, 'room-9.jpg'),
     aPluginItem(902, 9, 'alien-keypad.jpg', MasterMind),
