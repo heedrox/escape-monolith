@@ -5,6 +5,9 @@ import Whiteboard from '@/components/game/plugins/whiteboard/Whiteboard';
 
 const anItem = (id, roomId, image, type = '') =>
   ({ id, roomId, image, type, corrupted: false, invisible: false });
+const anAudioItem = (id, roomId, image, thumbnail) =>
+  ({ id, roomId, image, thumbnail, type: 'MP3', corrupted: false, invisible: false});
+
 const anInvisibleItem = (id, roomId, image, type = '') =>
   ({ id, roomId, image, type, corrupted: false, invisible: true });
 const aCorruptedItem = (id, roomId, image, destinataries, type = '') =>
@@ -39,6 +42,7 @@ export default {
     'XTRU', //room 9 - part 3
     'DBFAKNMIXTRU', //room 9 - all , just in case they try like this also
     'DCBAM', //room 8
+    'MUERTEYODESTRUCTOR', //room 7- final 18 letter passcode
   ],
   items: [
     anItem(201, 2, 'pared-de-tres-letras.jpg'),
@@ -63,12 +67,18 @@ export default {
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),
     aDifferentItem(503, 5, 'pista-tooche-1a.jpg', 'pista-tooche-1b.jpg', byNumberDestinataries([1], [1,3])),
-    anItem(504, 5, '030-humanos-pistas.mp3', 'MP3'),
+    anAudioItem(504, 5, '030-humanos-pistas.mp3', 'voice-2.gif'),
 
     anItem(601, 6, 'room-6.jpg'),
     anItem(602, 6, 'room-6-constelations.jpg'),
 
-    anItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
+    anItem(701,7, 'room7-entrance.mp4', 'VIDEO'),
+    anItem(702,7, 'room7.jpg'),
+    anItem(703, 7, 'self-destruct.jpg'),
+    anItem(704, 7, 'room7-instrucciones-1.jpg'),
+    anItem(705, 7, 'room7-instrucciones-2.jpg'),
+
+    anAudioItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'voice-3.gif'),
     anItem(802, 8, 'room-8.jpg'),
     aDifferentItem(803, 8, 'animales-solucion-1.jpg', 'animales-1.jpg', byNumberDestinataries([1], [1])),
     aDifferentItem(804, 8, 'animales-solucion-2.jpg', 'animales-2.jpg', byNumberDestinataries([1], [1])),

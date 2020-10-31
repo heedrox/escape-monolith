@@ -1,7 +1,7 @@
 <template>
   <div class="zoomed-item box" @click.stop="">
     <span class="helper"></span>
-    <img v-if="isPlaying" alt="wave" :src="`${publicPath}game/common/play-audio-start.gif`" />
+    <img v-if="isPlaying" alt="wave" :src="waveUrl" />
     <img v-if="!isPlaying" alt="wave" :src="`${publicPath}game/common/play-audio-stop.jpg`" />
     <div class="audiodiv">
       <audio controls :src="src" @play="onplay()" @pause="onpause()">
@@ -41,12 +41,27 @@ export default {
     src: {
       type: String,
       default: '',
+    },
+    thumbnail: {
+      type: String,
+      default: '',
+    },
+    roomId: {
+      type: String,
+      default: '',
     }
   },
   data() {
     return {
       publicPath: process.env.BASE_URL,
       isPlaying: false,
+    }
+  },
+  computed: {
+    waveUrl() {
+      return this.thumbnail ?
+          `${this.publicPath}game/${this.roomId}/${this.thumbnail}` :
+          `${this.publicPath}game/common/play-audio-start.gif`;
     }
   },
   methods: {

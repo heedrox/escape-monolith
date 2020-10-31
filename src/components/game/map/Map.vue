@@ -8,6 +8,7 @@
       <a v-if="existsRoom(4)" href="#" :class="adminGetClassFor(4)" @click.prevent="adminUnlock(4)">4</a>
       <a v-if="existsRoom(5)" href="#" :class="adminGetClassFor(5)" @click.prevent="adminUnlock(5)">5</a>
       <a v-if="existsRoom(6)" href="#" :class="adminGetClassFor(6)" @click.prevent="adminUnlock(6)">6</a>
+      <a v-if="existsRoom(7)" href="#" :class="adminGetClassFor(7)" @click.prevent="adminUnlock(7)">7</a>
       <a v-if="existsRoom(8)" href="#" :class="adminGetClassFor(8)" @click.prevent="adminUnlock(8)">8</a>
       <a v-if="existsRoom(9)" href="#" :class="adminGetClassFor(9)" @click.prevent="adminUnlock(9)">9</a>
     </div>
@@ -44,7 +45,7 @@
     <div class="separator"></div>
 
     <div class="separator"></div>
-    <div class="separator" :class="getClassForSeparator('vertical', 4,7)"></div>
+    <div class="separator"></div>
     <div class="separator"></div>
     <div class="separator" :class="getClassForSeparator('vertical', 5,8)"></div>
     <div class="separator"></div>
@@ -53,7 +54,7 @@
 
     <div class="separator"></div>
     <div class="room box room7" :class="getClassForRoom(7)" @click="changeRoom(7)"></div>
-    <div class="separator"></div>
+    <div class="separator" :class="getClassForSeparator('horizontal', 7,8)"></div>
     <div class="room box room8" :class="getClassForRoom(8)" @click="changeRoom(8)"></div>
     <div class="separator"></div>
     <div class="room box room9" :class="getClassForRoom(9)" @click="changeRoom(9)"></div>

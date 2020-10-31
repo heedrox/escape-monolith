@@ -4,7 +4,7 @@
       X
     </div>
     <SelectedVideoItem v-if="item.type === 'VIDEO'" :src="url" />
-    <SelectedAudioItem v-else-if="item.type === 'MP3'" :src="url" />
+    <SelectedAudioItem v-else-if="item.type === 'MP3'" :src="url" :thumbnail="item.thumbnail" :room-id="item.roomId" />
     <SelectedPdfItem v-else-if="item.type === 'PDF'" :src="url" />
     <SelectedPianoItem v-else-if="item.type === 'PIANO'" :alt="item.image" :src="url" />
     <SelectedPluginItem v-else-if="item.plugin" :item="item" />
