@@ -77,6 +77,7 @@ export default {
     anItem(703, 7, 'self-destruct.jpg'),
     anItem(704, 7, 'room7-instrucciones-1.jpg'),
     anItem(705, 7, 'room7-instrucciones-2.jpg'),
+    anItem(706, 7, 'monolith-ending.mp4', 'VIDEO'),
 
     anAudioItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'voice-3.gif'),
     anItem(802, 8, 'room-8.jpg'),
