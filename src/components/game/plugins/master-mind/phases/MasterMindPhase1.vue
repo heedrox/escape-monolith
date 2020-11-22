@@ -46,29 +46,21 @@
           {{ currentTryLetter(3) }}
         </td>
       </tr>
-      <tr v-for="ntry in [8, 7, 6, 5, 4, 3, 2, 1, 0]" :key="ntry">
+      <tr v-for="rowTry in [8, 7, 6, 5, 4, 3, 2, 1, 0]" :key="rowTry">
         <td class="aletter">
-          {{ tryLetter(ntry, 0) }}
+          {{ tryLetter(rowTry, 0) }}
         </td>
         <td class="aletter">
-          {{ tryLetter(ntry, 1) }}
+          {{ tryLetter(rowTry, 1) }}
         </td>
         <td class="aletter">
-          {{ tryLetter(ntry, 2) }}
+          {{ tryLetter(rowTry, 2) }}
         </td>
         <td class="aletter">
-          {{ tryLetter(ntry, 3) }}
+          {{ tryLetter(rowTry, 3) }}
         </td>
         <td class="res">
-          <span v-for="(idx, itm) in Array(timesOk(ntry)).fill(0)" :key="`ok-${itm}-${idx}`" class="resok">
-            &#9679;
-          </span>
-          <span v-for="(idx, itm) in Array(timesMid(ntry)).fill(0)" :key="`mid-${itm}-${idx}`" class="resmid">
-            &#9680;
-          </span>
-          <span v-for="(idx, itm) in Array(timesKo(ntry)).fill(0)" :key="`ko-${itm}-${idx}`" class="resko">
-            &#9675;
-          </span>
+          <master-mind-phase1-result :the-try="tries[rowTry]"></master-mind-phase1-result>
         </td>
       </tr>
     </table>
@@ -125,18 +117,6 @@ td.res {
   padding-left:5vw;
 }
 
-.resok {
-  color: #8efc80;
-}
-
-.resko {
-  color: #ff6c7a;
-}
-
-.resmid {
-  color: #ffb36c;
-}
-
 tr.current-letters {
   height: 8vh;
 }
@@ -158,28 +138,14 @@ tr.current-letters {
 <script>
 import { getGameCode } from '@/lib/get-game-code';
 import { getPlayerNumber } from '@/lib/get-player-number';
-import { COMBINATIONS, LETTERS } from '@/components/game/plugins/master-mind/phases/common';
-
-
-const countOk = (currentCombination, realCombination) =>
-    currentCombination.split('')
-        .map((x, idx) => realCombination[idx] === x)
-        .filter(r => r === true).length;
-
-const countMid = (currentCombination, realCombination) =>
-    currentCombination.split('')
-        .map((x, idx) => (realCombination[idx] !== x) && (realCombination.indexOf(x)>=0))
-        .filter(r => r === true).length;
-
-const countKo = (currentCombination, realCombination) =>
-    currentCombination.split('')
-        .map(x => realCombination.indexOf(x) === -1)
-        .filter(r => r === true).length;
+import { LETTERS, timesOk } from '@/components/game/plugins/master-mind/phases/common';
+import MasterMindPhase1Result from './master-mind-phase-1-result/MasterMindPhase1Result';
 
 const LOCAL_STORAGE_NAME = () => `MASTERMIND-${getGameCode()}-${getPlayerNumber()}`;
 
 export default {
   name: 'MasterMindPhase1',
+  components: { MasterMindPhase1Result },
   emits: ['update-phase'],
   data() {
     return {
@@ -217,7 +183,7 @@ export default {
         }
       };
       const checkNextPhase = () => {
-        if (this.timesOk(this.tries.length-1) === 4) {
+        if (timesOk(this.tries[this.tries.length-1]) === 4) {
           this.currentPhase = 2;
           this.$emit('update-phase');
         }
@@ -245,21 +211,7 @@ export default {
       if (numLetter >= tryArr.length) return '';
       return tryArr[numLetter];
     },
-    timesOk(item) {
-      if (!this.tries[item]) return 0;
-      const playerNumber = getPlayerNumber() || 3;
-      return countOk(this.tries[item], COMBINATIONS[playerNumber]);
-    },
-    timesMid(item) {
-      if (!this.tries[item]) return 0;
-      const playerNumber = getPlayerNumber() || 3;
-      return countMid(this.tries[item], COMBINATIONS[playerNumber]);
-    },
-    timesKo(item) {
-      if (!this.tries[item]) return 0;
-      const playerNumber = getPlayerNumber() || 3;
-      return countKo(this.tries[item], COMBINATIONS[playerNumber]);
-    },
+
   }
 }
 </script>
