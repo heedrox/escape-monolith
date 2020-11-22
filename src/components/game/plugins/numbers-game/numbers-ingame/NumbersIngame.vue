@@ -1,8 +1,6 @@
 <template>
   <div v-if="(numberGameState.currentTurn>=0) && (numberGameState.currentTurn<3)">
-    <div :class="[ 'turn', isTurnOk ? 'turnok' : '']">
-      {{ numberGameState.currentTurn + 1 }} / 3
-    </div>
+    <NumbersTurn :is-turn-ok="isTurnOk" :current-turn="numberGameState.currentTurn" />
     <div class="progressbar" :style="`width:${progressBarWidth}vw`">
     </div>
     <div v-for="(img, idx) in images" :key="img"
@@ -20,19 +18,6 @@
   </div>
 </template>
 <style scoped>
-.turn {
-  position:fixed;
-  font-family: 'SpaceJunk', Arial, Helvetica, serif;
-  color:white;
-  font-size: 4vh;
-  top:13vh;
-  left:13vw;
-}
-
-.turnok {
-  color: #8efc80;
-}
-
 .progressbar {
   position:fixed;
   background-color:#8efc80;
@@ -130,6 +115,7 @@ import { getPlayerNumber } from '@/lib/get-player-number';
 import firebaseUtil from '@/lib/firebase-util';
 import { isAdmin } from '@/lib/is-admin';
 import NumbersResult from '@/components/game/plugins/numbers-game/numbers-result/NumbersResult';
+import NumbersTurn from '@/components/game/plugins/numbers-game/numbers-ingame/numbers-turn/NumbersTurn';
 
 const IMAGE_ORDERS = [
   [0, 0, 0, 0],
@@ -168,6 +154,7 @@ const pointsForImage = (gameState, imgNumber) =>
 
 export default {
   name: 'NumbersIngame',
+  components: { NumbersTurn },
   emits: ['complete'],
   data() {
     return {
