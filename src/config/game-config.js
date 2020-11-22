@@ -48,15 +48,11 @@ export default {
     anItem(201, 2, 'pared-de-tres-letras.jpg'),
     anItem(202, 2, 'pared-botones.jpg'),
     anItem(203, 2, 'pared-con-pista.jpg'),
-    anItem(204, 2, 'pared-explicacion-planeta.jpg'),
     anItem(205, 2, 'letras.jpg'),
     anItem(206, 2, 'teclado-normal.jpg'),
 
-    aCorruptedItem(207, 2, 'letras.jpg', byNumberDestinataries([1], [1, 2])),
-    aCorruptedItem(208, 2, 'teclado-normal.jpg', byNumberDestinataries([2], [3])),
-    aCorruptedItem(209, 2, 'teclado-reves.jpg', byNumberDestinataries([2], [3])),
     anInvisibleItem(210, 2, '000-transmission.mp3', 'MP3'),
-    anItem(211, 2, '010-humanos-idiotas.mp3', 'MP3'),
+    anInvisibleItem(211, 2, '010-humanos-idiotas.mp3', 'MP3'),
     anInvisibleItem(212, 2, '020-elevator.mp3', 'MP3'),
 
     anItem(401, 4, 'room-4.jpg'),
