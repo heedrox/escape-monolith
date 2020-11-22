@@ -63,7 +63,6 @@ export default {
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),
     aDifferentItem(503, 5, 'pista-tooche-1a.jpg', 'pista-tooche-1b.jpg', byNumberDestinataries([1], [1,3])),
-    anAudioItem(504, 5, '030-humanos-pistas.mp3', 'voice-2.gif'),
 
     anItem(601, 6, 'room-6.jpg'),
     anItem(602, 6, 'room-6-constelations.jpg'),
