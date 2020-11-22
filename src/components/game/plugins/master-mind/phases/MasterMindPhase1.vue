@@ -30,15 +30,19 @@
     <table v-if="currentPhase === 1" class="game-board-list">
       <tr class="current-letters">
         <td class="aletter">
+          <span v-if="(typeof currentTry !== 'undefined') && currentTry.length === 0" class="caret"> </span>
           {{ currentTryLetter(0) }}
         </td>
         <td class="aletter">
+          <span v-if="(typeof currentTry !== 'undefined') && currentTry.length === 1" class="caret"> </span>
           {{ currentTryLetter(1) }}
         </td>
         <td class="aletter">
+          <span v-if="(typeof currentTry !== 'undefined') && currentTry.length === 2" class="caret"> </span>
           {{ currentTryLetter(2) }}
         </td>
         <td class="aletter">
+          <span v-if="(typeof currentTry !== 'undefined') && currentTry.length === 3" class="caret"> </span>
           {{ currentTryLetter(3) }}
         </td>
       </tr>
@@ -136,6 +140,20 @@ td.res {
 tr.current-letters {
   height: 8vh;
 }
+
+.caret {
+  -webkit-animation: blink 0.8s infinite;
+  width:0.3vw;
+  margin-left:1vw;
+  height: 6vh;
+  display:block;
+}
+
+@-webkit-keyframes blink {
+  0% {background: #222}
+  50% {background: #efefef}
+  100% {background: #222}
+}
 </style>
 <script>
 import { getGameCode } from '@/lib/get-game-code';
@@ -179,6 +197,8 @@ export default {
       if (this.currentPhase === 2) {
         this.$emit('update-phase');
       }
+    } else {
+      this.tries.push(this.myletter(0) + this.myletter(1) + this.myletter(2) + this.myletter(3));
     }
   },
   destroyed() {

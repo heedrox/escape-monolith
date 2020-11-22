@@ -36,7 +36,7 @@ export default {
     'OSHOY', //room2 - parte 3
     // '563403408', // poligonos cuadros
     '4985', //room6
-    'C7B1B6', //room5
+    'G7B1B5', //room5
     'DBFA', //room 9 - part 1
     'KNMI', //room 9 - part 2
     'XTRU', //room 9 - part 3
