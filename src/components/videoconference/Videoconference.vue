@@ -1,61 +1,35 @@
 <template>
   <div>
-    <div v-show="!iframeLoaded" class="loadingvideo">
-      Cargando video...
-    </div>
-    <div v-show="!gameState.hideVideo" id="jitsimeet"></div>
-    <div class="videobtns">
-      <button v-if="isAdmin()" @click="muteAll()">
-        MUTE ALL
-      </button>
-      <button v-if="isAdmin()" @click="unmuteAll()">
-        UN-MUTE ALL
-      </button>
-      <button v-if="isAdmin()" @click="muteOne(1)">
-        MUTE 1
-      </button>
-      <button v-if="isAdmin()" @click="muteOne(2)">
-        MUTE 2
-      </button>
-      <button v-if="isAdmin()" @click="muteOne(3)">
-        MUTE 3
-      </button>
-      <button v-if="isAdmin()" @click="doStart()">
-        START GAME
-      </button>
-    </div>
+    <VideoLoading v-show="isExistent && !iframeLoaded"></VideoLoading>
+    <VideoFrame v-if="isExistent" v-show="isVisible"
+                :is-muted="isMuted" @loaded="iframeLoaded = true"
+    />
+    <VideoControl></VideoControl>
   </div>
 </template>
-<style scoped type="text/css">
-.loadingvideo {
-  position: fixed;
-  top: 5vh;
-  width: 100%;
-  text-align: center;
-  font-family: 'SpaceJunk', Arial, Helvetica, serif;
-  font-size: 8vh;
-  color: #8efc80;
-}
 
-.videobtns {
-  top: 1vh;
-  left: 1vw;
-  position: fixed;
-}
-</style>
 <script>
-import { getGameCode } from '@/lib/get-game-code';
 import { isAdmin } from '@/lib/is-admin';
 import firebaseUtil from '@/lib/firebase-util';
 import { getPlayerNumber } from '@/lib/get-player-number';
+import gameActions from '../game/game-actions/lib/game-actions-lib';
+import VideoLoading from '@/components/videoconference/video-loading/VideoLoading';
+import VideoFrame from '@/components/videoconference/video-frame/VideoFrame';
+import VideoControl from '@/components/videoconference/video-control/VideoControl';
 
 export default {
   name: 'Videoconference',
-  emits: ['start'],
+  components: { VideoLoading, VideoFrame, VideoControl },
+  props: {
+    isExistent: { type: Boolean, value: false },
+    isVisible: { type: Boolean, value: false },
+  },
+  emits: ['start', 'show-video'],
   data() {
     return {
       gameState: {},
       iframeLoaded: false,
+      isMuted: false,
     };
   },
   firestore: {
@@ -64,8 +38,11 @@ export default {
   watch: {
     gameState() {
       console.log('game state changed!', this.gameState);
-      if (this.gameState.hideVideo === true) {
+      if (gameActions.isAction(this.gameState, 'HIDEVIDEO')) {
         this.$emit('start');
+      }
+      if (gameActions.isAction(this.gameState, 'SHOWVIDEO')) {
+        this.$emit('show-video');
       }
       if (this.gameState.muted && !isAdmin()) {
         if (this.gameState.muted.indexOf(getPlayerNumber()) >= 0) {
@@ -76,55 +53,19 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$firestoreRefs.gameState.update({ hideVideo: false, unmute: false });
-    const domain = 'meet.jit.si';
-    const options = {
-      roomName: 'escape-monolith-' + getGameCode(),
-      width: 700,
-      height: 700,
-      parentNode: document.querySelector('#jitsimeet'),
-      onload: () => {
-        this.iframeLoaded = true;
-      }
-    };
-    this.jitsiApi = new JitsiMeetExternalAPI(domain, options);
-  },
-  destroyed() {
-    this.jitsiApi.dispose();
-  },
   methods: {
-    muteAll() {
-      this.$firestoreRefs.gameState.update({ muted: [1, 2, 3] });
-      this.jitsiApi.executeCommand('muteEveryone')
-    },
-    muteOne(x) {
-      this.$firestoreRefs.gameState.update({ muted: [x] });
-    },
-    unmuteAll() {
-      this.$firestoreRefs.gameState.update({ muted: [] });
-    },
     unmuteLocal() {
-      this.jitsiApi.isAudioMuted().then(muted => {
-        if (muted) {
-          this.jitsiApi.executeCommand('toggleAudio');
-        }
-      });
+      this.isMuted = false;
     },
     muteLocal() {
-      this.jitsiApi.isAudioMuted().then(muted => {
-        if (!muted) {
-          this.jitsiApi.executeCommand('toggleAudio');
-        }
-      });
-    },
-    isAdmin() {
-      return isAdmin();
+      this.isMuted = true;
     },
     doStart() {
-      this.$firestoreRefs.gameState.update({ hideVideo: true });
-      this.$emit('start');
+      gameActions.send(this.$firestoreRefs.gameState, { id: 'HIDEVIDEO' });
     },
+    doShowVideo() {
+      gameActions.send(this.$firestoreRefs.gameState, { id: 'SHOWVIDEO' });
+    }
 
   },
 }

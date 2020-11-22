@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <Welcome v-if="state === 'WELCOME'" @start="createCode(); startVideo()" />
-    <Videoconference v-if="videoActive" @start="startGame()" />
+    <Videoconference :is-existent="state === 'VIDEO' || state === 'GAME'"
+                      :is-visible="state === 'VIDEO'"
+                     @start="startGame()"
+                     @show-video="showVideo()"
+    />
     <Game v-if="state === 'GAME'"></Game>
   </div>
 </template>
@@ -32,8 +36,6 @@ export default {
   data() {
     return {
       state: STATES.WELCOME,
-      videoActive: false,
-
     }
   },
   firestore: {
@@ -48,10 +50,12 @@ export default {
     },
     startVideo() {
       this.state = STATES.VIDEO;
-      this.videoActive = true;
     },
     startGame() {
       this.state = STATES.GAME;
+    },
+    showVideo() {
+      this.state = STATES.VIDEO;
     }
   }
 }
