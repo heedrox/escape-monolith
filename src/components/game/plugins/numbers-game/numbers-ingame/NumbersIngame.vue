@@ -1,6 +1,7 @@
 <template>
   <div v-if="(numberGameState.currentTurn>=0) && (numberGameState.currentTurn<3)">
     <NumbersTurn :is-turn-ok="isTurnOk" :current-turn="numberGameState.currentTurn" />
+    <div class="mycounter">+{{ mySum() }}</div>
     <div class="progressbar" :style="`width:${progressBarWidth}vw`">
     </div>
     <div v-for="(img, idx) in images" :key="img"
@@ -26,6 +27,15 @@
   height:5vh;
 }
 
+.mycounter {
+  position: fixed;
+  top:13vh;
+  left:84vw;
+  font-family: 'SpaceAge', Avenir, Helvetica, Arial, sans-serif;
+  font-size: 3vw;
+  color: #9f9fff;
+  text-align: left;
+}
 
 .divimg {
   position: fixed;

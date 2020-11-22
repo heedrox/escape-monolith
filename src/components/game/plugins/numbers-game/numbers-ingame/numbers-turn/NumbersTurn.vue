@@ -1,6 +1,6 @@
 <template>
   <div :class="[ 'turn', isTurnOk ? 'turnok' : '']">
-    <span v-for="(x) in [...Array(numberOfOk)]" :key="x" class="turnok">O </span>
+    <span v-for="(x) in [...Array(numberOfOk)]" :key="x" class="turnok">O</span>
     <span v-for="(x, y) in [...Array(numberOfPending)]" :key="y" :class="[ y === 0 ? 'currentTurn' : '']">X</span>
   </div>
 </template>
