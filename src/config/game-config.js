@@ -31,16 +31,21 @@ export default {
   },
   codes: [
     '0000', //to test
+
     'MORID', //room2 - parte 1
     'HUMAN', //room2 - parte 2
     'OSHOY', //room2 - parte 3
-    // '563403408', // poligonos cuadros
-    '4985', //room6
-    'G7B1B5', //room5
+
+    '4985', //room6 (stars)
+
+    'G7B1B5', //room5 (touche)
+
     'DBFA', //room 9 - part 1
     'KNMI', //room 9 - part 2
     'XTRU', //room 9 - part 3
     'DBFAKNMIXTRU', //room 9 - all , just in case they try like this also
+
+    'C', //room 8 puzzle easy
     'DCBAM', //room 8
     'MUERTEYODESTRUCTOR', //room 7- final 18 letter passcode
   ],
@@ -63,6 +68,7 @@ export default {
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),
     aDifferentItem(503, 5, 'pista-tooche-1a.jpg', 'pista-tooche-1b.jpg', byNumberDestinataries([1], [1,3])),
+    anInvisibleItem(504, 5, '030-humanos-pistas.mp3', 'MP3'),
 
     anItem(601, 6, 'room-6.jpg'),
     anItem(602, 6, 'room-6-constelations.jpg'),
@@ -74,12 +80,25 @@ export default {
     anItem(705, 7, 'room7-instrucciones-2.jpg'),
     anItem(706, 7, 'monolith-ending.mp4', 'VIDEO'),
 
-    anAudioItem(801, 8, '040-humanos-idiotas-room-8.mp3', 'voice-3.gif'),
     anItem(802, 8, 'room-8.jpg'),
-    aDifferentItem(803, 8, 'animales-solucion-1.jpg', 'animales-1.jpg', byNumberDestinataries([1], [1])),
-    aDifferentItem(804, 8, 'animales-solucion-2.jpg', 'animales-2.jpg', byNumberDestinataries([1], [1])),
-    aDifferentItem(805, 8, 'panel-room8-solucion.jpg', 'panel-room8.jpg', byNumberDestinataries([2], [3])),
+    (getNumberPlayers() === 2) ?
+      aDifferentItemMultiple(803, 8, [
+        anImageFor('1-puzle-easy-a.jpg', [1]),
+        anImageFor('1-puzle-easy-b.jpg', [2]),
+      ]) :
+      aDifferentItemMultiple(803, 8, [
+        anImageFor('1-puzle-easy-a.jpg', [1]),
+        anImageFor('1-puzle-easy-b.jpg', [2]),
+        anImageFor('1-puzle-easy-c.jpg', [3]),
+      ]),
+    (getNumberPlayers() === 2) ?
+      aDifferentItemMultiple(804, 8, [
+        anImageFor('1-puzle-easy-c.jpg', [2])
+        ]) :
+      anInvisibleItem(804, 8, ''),
     aPluginItem(806, 8, 'whiteboard.jpg', Whiteboard),
+    anInvisibleItem(807, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
+
 
     anItem(901, 9, 'room-9.jpg'),
     aPluginItem(902, 9, 'alien-keypad.jpg', MasterMind),

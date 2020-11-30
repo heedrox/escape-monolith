@@ -26,6 +26,9 @@
       <div class="mmbox" @click="select(7)">
         {{ myletter(7) }}
       </div>
+      <div class="keypadIdentifier">
+        {{ identifierLow }} - {{ identifierHigh }}
+      </div>
     </div>
     <table v-if="currentPhase === 1" class="game-board-list">
       <tr class="current-letters">
@@ -85,6 +88,13 @@
 
 }
 
+.keypadIdentifier {
+  color: #efefef;
+  text-align: left;
+  padding-top: 1vh;
+  font-size:2vh;
+  font-family: "SpaceJunk", "Lucida Sans Unicode", sans-serif;
+}
 .mmbox {
   font-family: 'Alien', serif;
   font-size: 14vh;
@@ -153,6 +163,14 @@ export default {
       tries: [],
       currentPhase: 1,
     };
+  },
+  computed: {
+    identifierLow() {
+      return 1 + ((getPlayerNumber() || 1) - 1) * 8;
+    },
+    identifierHigh() {
+      return ((getPlayerNumber() || 1)) * 8;
+    },
   },
   mounted() {
     const theData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_NAME()));
