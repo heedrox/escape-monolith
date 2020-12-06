@@ -3,6 +3,9 @@ import MasterMind from '@/components/game/plugins/master-mind/MasterMind';
 import { getNumberPlayers } from '@/lib/get-number-players';
 import Whiteboard from '@/components/game/plugins/whiteboard/Whiteboard';
 import PuzzleRoom8RotatingImages from '@/components/game/plugins/puzzle-room-8/PuzzleRoom8RotatingImages';
+import { getPlayerNumber } from '@/lib/get-player-number';
+import { isAdmin } from '@/lib/is-admin';
+import playerCodes from './player-codes';
 
 const anItem = (id, roomId, image, type = '') =>
   ({ id, roomId, image, type, corrupted: false, invisible: false });
@@ -27,11 +30,7 @@ const when2 = (resIf2, resIf3) => (getNumberPlayers() === 2 ? resIf2 : resIf3);
 export default {
   defaultActiveRoom: 2,
   availableRooms: [2, 4, 5, 6, 7, 8, 9],
-  players: {
-    '481516': 1,
-    'SAVETCSTW': 2,
-    'KENSENTME': 3,
-  },
+  players: playerCodes,
   codes: [
     '0000', //to test
 
@@ -101,7 +100,22 @@ export default {
       ]),
       anInvisibleItem(804, 8, '')
     ),
-    aPluginItem(805, 8, '2-puzzle-images-thumb.jpg', PuzzleRoom8RotatingImages),
+    //805 is only seen by player 1
+    ((getPlayerNumber() === 1)||isAdmin()) ?
+      aPluginItem(805, 8, '2-puzzle-images-thumb.jpg', PuzzleRoom8RotatingImages) :
+      anInvisibleItem(805, 8, ''),
+    //806 is only seen by player 2
+    ((getPlayerNumber() === 2)||isAdmin()) ?
+      anItem(806, 8, '2-puzzle-formula.jpg') :
+      anInvisibleItem(806, 8, ''),
+    //807 is seen by player 2 if two players, and seen by player number 3, if three players
+    when2(((getPlayerNumber() === 2)||isAdmin()) ?
+      anItem(807, 8, '2-puzzle-cuadros.jpg') :
+      anInvisibleItem(807, 8, ''),
+        ((getPlayerNumber() === 3)||isAdmin()) ?
+      anItem(807, 8, '2-puzzle-cuadros.jpg') :
+      anInvisibleItem(807, 8, '')
+    ),
     aPluginItem(808, 8, 'whiteboard.jpg', Whiteboard),
     anInvisibleItem(809, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
 

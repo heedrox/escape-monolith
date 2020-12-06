@@ -1,4 +1,4 @@
-import gameConfig from '@/config/game-config';
+import playerCodes from '@/config/player-codes';
 
 export const getPlayerNumber = () =>
-  gameConfig.players[Object.keys(gameConfig.players).find(code => window.location.href.indexOf(code)>=0)];
+  playerCodes[Object.keys(playerCodes).find(code => window.location.href.indexOf(code)>=0)];
