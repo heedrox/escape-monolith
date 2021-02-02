@@ -35,8 +35,6 @@ export default {
     '0000', //to test
 
     'MORID', //room2 - parte 1
-    'HUMAN', //room2 - parte 2
-    'OSHOY', //room2 - parte 3
 
     '4985', //room6 (stars)
 
@@ -47,8 +45,8 @@ export default {
     'XTRU', //room 9 - part 3
     'DBFAKNMIXTRU', //room 9 - all , just in case they try like this also
 
-    'C', //room 8 puzzle easy
-    'CANE', //room 8
+    // do not set this as a clue as they can try Nth times 'C', //room 8 puzzle easy
+    'LANA', //room 8
     'MUERTEYODESTRUCTOR', //room 7- final 18 letter passcode
   ],
   items: [
@@ -81,6 +79,7 @@ export default {
     anItem(704, 7, 'room7-instrucciones-1.jpg'),
     anItem(706, 7, 'monolith-ending.mp4', 'VIDEO'),
 
+    anItem(801, 8, 'room-8a.jpg'),
     anItem(802, 8, 'room-8.jpg'),
     aDifferentItemMultiple(803, 8,
       when2([
