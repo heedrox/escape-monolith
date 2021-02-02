@@ -69,9 +69,12 @@ export default {
     anItem(502, 5, 'ladrillo-1.jpg'),
     aDifferentItem(503, 5, 'pista-tooche-1a.jpg', 'pista-tooche-1b.jpg', byNumberDestinataries([1], [1, 3])),
     anInvisibleItem(504, 5, '030-humanos-pistas.mp3', 'MP3'),
+    anInvisibleItem(505, 5, 'monster-laugh.mp3', 'MP3'),
+    anInvisibleItem(506, 5, 'monster-scream.mp3', 'MP3'),
 
     anItem(601, 6, 'room-6.jpg'),
     anItem(602, 6, 'room-6-constelations.jpg'),
+    anInvisibleItem(603, 6, 'ladrillo.mp3', 'MP3'),
 
     anItem(701, 7, 'room7-entrance.mp4', 'VIDEO'),
     anItem(702, 7, 'room7.jpg'),
@@ -114,8 +117,8 @@ export default {
       anItem(807, 8, '2-puzzle-cuadros.jpg') :
       anInvisibleItem(807, 8, '')
     ),
-    aPluginItem(808, 8, 'whiteboard.jpg', Whiteboard),
-    anInvisibleItem(809, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
+    // aPluginItem(808, 8, 'whiteboard.jpg', Whiteboard),
+    // anInvisibleItem(809, 8, '040-humanos-idiotas-room-8.mp3', 'MP3'),
 
 
     anItem(901, 9, 'room-9.jpg'),
