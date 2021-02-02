@@ -63,7 +63,7 @@ export default {
     anItem(401, 4, 'room-4.jpg'),
     anItem(402, 4, 'ladrillo-2.jpg'),
     aPluginItem(403, 4, 'numbers-game.jpg', NumbersGame),
-    aDifferentItem(404, 4, 'tooche-pista-3.jpg', 'tooche-pista-3b.jpg', byNumberDestinataries([2], [1, 2])),
+    aDifferentItem(404, 4, 'tooche-pista-3.jpg', 'tooche-pista-3b.jpg', byNumberDestinataries([1], [1])),
 
     anItem(501, 5, 'room-5.jpg'),
     anItem(502, 5, 'ladrillo-1.jpg'),
@@ -134,7 +134,7 @@ export default {
         anImageFor('aliens-1-2.jpg', [3])
       ])
     ),
-    aDifferentItem(904, 9, 'tooche-pista-2.jpg', 'tooche-pista-2b.jpg', byNumberDestinataries([2], [2, 3])),
+    aDifferentItem(904, 9, 'tooche-pista-2.jpg', 'tooche-pista-2b.jpg', byNumberDestinataries([2], [ 3])),
 
   ]
 }
